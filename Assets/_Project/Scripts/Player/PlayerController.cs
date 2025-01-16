@@ -1,23 +1,32 @@
-﻿using _Project.Scripts.GameSystemLogic.Interfaces;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts
 {
-    public class PlayerController : MonoBehaviour, IStartGame, IFinishGame
+    public class PlayerController : IStartGame, IPauseGame, IResumeGame, IFinishGame
     {
-        private PlayerInput _playerInput;
-        private PlayerManager _playerManager;
+        private readonly PlayerInput _playerInput;
+        private readonly Player _player;
 
 
-        public void Construct(PlayerInput playerInput, PlayerManager playerManager)
+        public PlayerController(PlayerInput playerInput, Player player)
         {
             _playerInput = playerInput;
-            _playerManager = playerManager;
+            _player = player;
         }
 
         public void StartGame()
         {
             _playerInput.OnMove += Move;
+        }
+
+        public void ResumeGame()
+        {
+            _playerInput.OnMove += Move;
+        }
+
+        public void PauseGame()
+        {
+            _playerInput.OnMove -= Move;
         }
 
         public void FinishGame()
@@ -27,7 +36,7 @@ namespace _Project.Scripts.Player
 
         private void Move(Vector3 direction)
         {
-            _playerManager.Move(direction);
+            _player.Move(direction);
         }
     }
 }

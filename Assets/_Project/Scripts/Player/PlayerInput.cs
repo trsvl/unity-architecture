@@ -1,10 +1,9 @@
 ﻿using System;
-using _Project.Scripts.GameSystemLogic.Interfaces;
 using UnityEngine;
 
-namespace _Project.Scripts.Player
+namespace _Project.Scripts
 {
-    public class PlayerInput : MonoBehaviour, IStartGame, IFinishGame
+    public class PlayerInput : IStartGame, IFinishGame, IUpdate
     {
         public event Action<Vector3> OnMove;
 
@@ -20,7 +19,7 @@ namespace _Project.Scripts.Player
             isActive = false;
         }
 
-        private void Update()
+        public void Update()
         {
             if (isActive)
             {

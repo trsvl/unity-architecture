@@ -1,30 +1,27 @@
-﻿namespace _Project.Scripts.GameSystemLogic.Interfaces
+﻿public enum GameState
 {
-    public enum GameState
-    {
-        OFF,
-        PLAY,
-        PAUSE,
-        FINISH
-    }
+    OFF,
+    PLAY,
+    PAUSE,
+    FINISH
+}
 
-    public interface IStartGame
-    {
-        public void StartGame();
-    }
+public interface IStartGame
+{
+    public void StartGame();
+}
 
-    public interface IPauseGame
-    {
-        public void PauseGame();
-    }
+public interface IPauseGame
+{
+    public void PauseGame();
+}
 
-    public interface IResumeGame
-    {
-        public void ResumeGame();
-    }
+public interface IResumeGame
+{
+    public void ResumeGame();
+}
 
-    public interface IFinishGame
-    {
-        public void FinishGame();
-    }
+public interface IFinishGame
+{
+    public void FinishGame();
 }

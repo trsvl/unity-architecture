@@ -1,30 +1,35 @@
 ﻿using System.Collections.Generic;
-using _Project.Scripts.GameSystemLogic.Interfaces;
 using UnityEngine;
 
 namespace _Project.Scripts.GameSystemLogic
 {
-    public class GameStatesListener : MonoBehaviour
+    public class GameContext : MonoBehaviour
     {
-        public GameState GameState
-        {
-            get { return gameState; }
-        }
+        public GameState GameState { get; private set; } = GameState.OFF;
 
-        private GameState gameState = GameState.OFF;
         private readonly List<object> listeners = new List<object>();
 
+
+        public void AddListener(object listener)
+        {
+            listeners.Add(listener);
+        }
+
+        public void RemoveListener(object listener)
+        {
+            listeners.Remove(listener);
+        }
 
         [ContextMenu("Start Game")]
         public void StartGame()
         {
-            if (gameState != GameState.OFF)
+            if (GameState != GameState.OFF)
             {
-                Debug.LogWarning("Game state is " + gameState);
+                Debug.LogWarning("Game state is " + GameState);
                 return;
             }
 
-            gameState = GameState.PLAY;
+            GameState = GameState.PLAY;
 
             foreach (var listener in listeners)
             {
@@ -38,13 +43,13 @@ namespace _Project.Scripts.GameSystemLogic
         [ContextMenu("Pause Game")]
         public void PauseGame()
         {
-            if (gameState != GameState.PLAY)
+            if (GameState != GameState.PLAY)
             {
-                Debug.LogWarning("Game state is " + gameState);
+                Debug.LogWarning("Game state is " + GameState);
                 return;
             }
 
-            gameState = GameState.PAUSE;
+            GameState = GameState.PAUSE;
 
             foreach (var listener in listeners)
             {
@@ -58,13 +63,13 @@ namespace _Project.Scripts.GameSystemLogic
         [ContextMenu("Resume Game")]
         public void ResumeGame()
         {
-            if (gameState != GameState.PAUSE)
+            if (GameState != GameState.PAUSE)
             {
-                Debug.LogWarning("Game state is " + gameState);
+                Debug.LogWarning("Game state is " + GameState);
                 return;
             }
 
-            gameState = GameState.PLAY;
+            GameState = GameState.PLAY;
 
             foreach (var listener in listeners)
             {
@@ -78,13 +83,13 @@ namespace _Project.Scripts.GameSystemLogic
         [ContextMenu("Finish Game")]
         public void FinishGame()
         {
-            if (gameState != GameState.PLAY)
+            if (GameState != GameState.PLAY)
             {
-                Debug.LogWarning("Game state is " + gameState);
+                Debug.LogWarning("Game state is " + GameState);
                 return;
             }
 
-            gameState = GameState.FINISH;
+            GameState = GameState.FINISH;
 
             foreach (var listener in listeners)
             {
@@ -93,16 +98,6 @@ namespace _Project.Scripts.GameSystemLogic
                     concreteListener.FinishGame();
                 }
             }
-        }
-
-        public void AddListener(object listener)
-        {
-            listeners.Add(listener);
-        }
-
-        public void RemoveListener(object listener)
-        {
-            listeners.Remove(listener);
         }
     }
 }

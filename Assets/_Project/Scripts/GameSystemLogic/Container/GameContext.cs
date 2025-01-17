@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Project.Scripts.GameSystemLogic
+namespace _Project.Scripts
 {
-    public class GameContext : MonoBehaviour
+    public class GameContext
     {
         public GameState GameState { get; private set; } = GameState.OFF;
 
@@ -12,7 +12,10 @@ namespace _Project.Scripts.GameSystemLogic
 
         public void AddListener(object listener)
         {
-            listeners.Add(listener);
+            if (listener is IStartGame or IPauseGame or IResumeGame or IFinishGame)
+            {
+                listeners.Add(listener);
+            }
         }
 
         public void RemoveListener(object listener)

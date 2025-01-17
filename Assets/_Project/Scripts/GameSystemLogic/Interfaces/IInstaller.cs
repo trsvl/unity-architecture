@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using _Project.Scripts;
 
 public interface IInstaller
 {
-    public Task Register();
+    public void Register(Container container);
 }

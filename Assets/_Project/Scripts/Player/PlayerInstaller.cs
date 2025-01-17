@@ -8,12 +8,13 @@ namespace _Project.Scripts
         [SerializeField] private Player player;
 
 
-        public Task Register()
+        public void Register(Container container)
         {
             PlayerInput playerInput = new PlayerInput();
-            PlayerController playerController = new PlayerController(playerInput, player);
+            container.Bind(playerInput);
 
-            return Task.CompletedTask;
+            PlayerController playerController = new PlayerController(playerInput, player);
+            container.Bind(playerController);
         }
     }
 }

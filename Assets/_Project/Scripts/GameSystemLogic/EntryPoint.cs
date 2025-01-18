@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace _Project.Scripts.GameSystemLogic
 {
@@ -25,8 +26,8 @@ namespace _Project.Scripts.GameSystemLogic
 
         private void InitializeContainer()
         {
-            GameObject gameObject = new GameObject();
-            var monoBehaviourListeners = gameObject.AddComponent<MonoBehaviourListeners>();
+            GameObject gameObj = new GameObject();
+            var monoBehaviourListeners = gameObj.AddComponent<MonoBehaviourListeners>();
             monoBehaviourListeners.enabled = false;
 
             container = new Container(monoBehaviourListeners);

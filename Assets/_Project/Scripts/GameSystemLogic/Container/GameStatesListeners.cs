@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class GameContext
+    public class GameStatesListeners
     {
         public GameState GameState { get; private set; } = GameState.OFF;
 
@@ -20,7 +20,10 @@ namespace _Project.Scripts
 
         public void RemoveListener(object listener)
         {
-            listeners.Remove(listener);
+            if (listener is IStartGame or IPauseGame or IResumeGame or IFinishGame)
+            {
+                listeners.Remove(listener);
+            }
         }
 
         [ContextMenu("Start Game")]

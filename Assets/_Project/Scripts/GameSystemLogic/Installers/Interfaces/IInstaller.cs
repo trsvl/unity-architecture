@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using _Project.Scripts;
+﻿using _Project.Scripts;
 
 public interface IInstaller
 {

@@ -1,3 +1,4 @@
-public interface IStateObserverInstaller : IInstaller
+public interface IStateObserverInstaller
 {
+    public IStateObserver RegisterStateObserver();
 }

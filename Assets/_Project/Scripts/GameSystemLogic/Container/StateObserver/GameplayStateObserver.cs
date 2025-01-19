@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class GameStatesListeners
+    public class GameplayStateObserver : IGameplayStateObserver
     {
         public GameState GameState { get; private set; } = GameState.OFF;
 
@@ -26,7 +26,6 @@ namespace _Project.Scripts
             }
         }
 
-        [ContextMenu("Start Game")]
         public void StartGame()
         {
             if (GameState != GameState.OFF)
@@ -46,7 +45,6 @@ namespace _Project.Scripts
             }
         }
 
-        [ContextMenu("Pause Game")]
         public void PauseGame()
         {
             if (GameState != GameState.PLAY)
@@ -66,7 +64,6 @@ namespace _Project.Scripts
             }
         }
 
-        [ContextMenu("Resume Game")]
         public void ResumeGame()
         {
             if (GameState != GameState.PAUSE)
@@ -86,7 +83,6 @@ namespace _Project.Scripts
             }
         }
 
-        [ContextMenu("Finish Game")]
         public void FinishGame()
         {
             if (GameState != GameState.PLAY)

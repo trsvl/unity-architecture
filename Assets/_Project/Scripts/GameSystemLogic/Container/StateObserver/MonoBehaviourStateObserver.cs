@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class MonoBehaviourListeners : MonoBehaviour
+    public class MonoBehaviourStateObserver : MonoBehaviour, IStateObserver
     {
         private readonly List<IUpdate> updateListeners = new();
 

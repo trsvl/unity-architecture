@@ -8,20 +8,25 @@ namespace _Project.Scripts
     {
         private readonly Dictionary<Type, List<object>> _services = new();
         private readonly Dictionary<Type, object> _singletonServices = new();
-        private readonly GameStatesListeners _gameStatesListeners = new();
-        private readonly MonoBehaviourListeners _monoBehaviourListeners;
+        private readonly List<IStateObserver> _stateObservers = new();
 
 
-        public Container(MonoBehaviourListeners monoBehaviourListeners)
+        public void AddStateObserver(IStateObserver stateObserver)
         {
-            _monoBehaviourListeners = monoBehaviourListeners;
+            if (stateObserver is null)
+            {
+                Debug.LogError($"{nameof(stateObserver)} is null");
+                return;
+            }
+
+            _stateObservers.Add(stateObserver);
         }
 
         public void Bind<T>(T service, bool isSingleton = false)
         {
             if (service == null)
             {
-                Debug.LogWarning("Service is null");
+                Debug.LogError("Service is null");
                 return;
             }
 
@@ -29,7 +34,7 @@ namespace _Project.Scripts
 
             if (_singletonServices.ContainsKey(type))
             {
-                Debug.LogWarning("Service already registered as singleton: " + type);
+                Debug.LogError("Service already registered as singleton: " + type);
                 return;
             }
 
@@ -37,7 +42,7 @@ namespace _Project.Scripts
             {
                 if (_services.ContainsKey(type))
                 {
-                    Debug.LogWarning("Service already registered as default service: " + type);
+                    Debug.LogError("Service already registered as default service: " + type);
                     return;
                 }
 
@@ -53,8 +58,10 @@ namespace _Project.Scripts
                 _services[type].Add(service);
             }
 
-            _gameStatesListeners.AddListener(service);
-            _monoBehaviourListeners.AddListener(service);
+            foreach (var stateObserver in _stateObservers)
+            {
+                stateObserver.AddListener(service);
+            }
         }
 
         public T GetService<T>()
@@ -70,7 +77,7 @@ namespace _Project.Scripts
             {
                 if (service.Count > 1)
                 {
-                    Debug.LogWarning("Multiple services found. Type: " + type);
+                    Debug.LogError("Multiple services found. Type: " + type);
                     return default;
                 }
 
@@ -80,7 +87,7 @@ namespace _Project.Scripts
                 }
             }
 
-            Debug.LogWarning("No services found. Type: " + type);
+            Debug.LogError("No services found. Type: " + type);
             return default;
         }
 
@@ -88,34 +95,13 @@ namespace _Project.Scripts
         {
             var type = typeof(T);
 
-            if (_services.TryGetValue(type, out var services))
+            if (this._services.TryGetValue(type, out var services))
             {
                 return (IEnumerable<T>)services;
             }
 
-            Debug.LogWarning("No services found. Type: " + type);
+            Debug.LogError("No services found. Type: " + type);
             return default;
-        }
-
-        public void StartGame()
-        {
-            _monoBehaviourListeners.enabled = true;
-            _gameStatesListeners.StartGame();
-        }
-
-        public void PauseGame()
-        {
-            _gameStatesListeners.PauseGame();
-        }
-
-        public void ResumeGame()
-        {
-            _gameStatesListeners.ResumeGame();
-        }
-
-        public void FinishGame()
-        {
-            _gameStatesListeners.FinishGame();
         }
     }
 }

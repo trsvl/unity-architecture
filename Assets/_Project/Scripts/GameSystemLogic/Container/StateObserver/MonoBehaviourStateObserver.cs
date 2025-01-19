@@ -3,10 +3,22 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class MonoBehaviourStateObserver : MonoBehaviour, IStateObserver
+    public class MonoBehaviourStateObserver : MonoBehaviour, IStateObserver, IStartGame
     {
         private readonly List<IUpdate> updateListeners = new();
 
+
+        private void Awake()
+        {
+            print(name + " Awake");
+            this.gameObject.SetActive(false);
+        }
+
+        public void StartGame()
+        {
+            this.gameObject.SetActive(true);
+            print(name + " has started");
+        }
 
         public void AddListener(object listener)
         {

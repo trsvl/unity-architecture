@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts
 {
-    public class GameplayStateObserver : IGameplayStateObserver
+    public class GameplayStateObserver : IGameplayStateObserver, IStateObserver
     {
         public GameState GameState { get; private set; } = GameState.OFF;
 

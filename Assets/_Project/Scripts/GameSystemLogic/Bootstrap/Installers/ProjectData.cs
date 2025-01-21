@@ -1,26 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _Project.Scripts.GameSystemLogic
 {
-    public class ProjectData : MonoBehaviour
+    public class ProjectData : Singleton<ProjectData>
     {
-        public static ProjectData Instance;
-
         public int Currency { get; private set; }
 
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(this);
-            }
+            base.Awake();
 
             DontDestroyOnLoad(this);
             InitializeData();
@@ -35,14 +25,15 @@ namespace _Project.Scripts.GameSystemLogic
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                SceneManager.LoadScene("SampleScene");
+                print("gameplay");
+                _ = SceneLoader.Instance.LoadScene(SceneLoader.Scene.Gameplay);
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                SceneManager.LoadScene("Main Menu");
+                print("mainmenu");
+                _ = SceneLoader.Instance.LoadScene(SceneLoader.Scene.MainMenu);
             }
-            
         }
     }
 }

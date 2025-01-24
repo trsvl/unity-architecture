@@ -64,6 +64,22 @@ namespace _Project.Scripts
             }
         }
 
+        public void BindListener<T>(T service)
+        {
+            foreach (var stateObserver in _stateObservers)
+            {
+                stateObserver.AddListener(service);
+            }
+        }
+        
+        public void UnbindListener<T>(T service)
+        {
+            foreach (var stateObserver in _stateObservers)
+            {
+                stateObserver.RemoveListener(service);
+            }
+        }
+
         public T GetService<T>()
         {
             var type = typeof(T);

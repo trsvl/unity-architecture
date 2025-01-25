@@ -12,15 +12,21 @@ namespace _Project.Scripts.Gameplay.Troops
             _troop = troop;
         }
 
+        public override void OnEnter()
+        {
+            Debug.Log("Chasing troop");
+        }
+
         public override void FixedUpdate()
         {
-            Vector2 direction = _troop.closestTargetCollider.transform.position - _troop.transform.position;
-            _troop.rb.velocity = direction;
+            Vector2 direction = _troop.ClosestTargetCollider.transform.localPosition - _troop.transform.localPosition;
+            _troop.Rb.velocity = direction.normalized * _troop.moveSpeed;
         }
 
         public override void OnExit()
         {
-            _troop.rb.velocity = new Vector2(0, 0);
+            Debug.Log("exit chase");
+            _troop.Rb.velocity = new Vector2(0, 0);
         }
     }
 }

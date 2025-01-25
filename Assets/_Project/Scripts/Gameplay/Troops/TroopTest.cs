@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class Troop : MonoBehaviour, IDamageable
+    public class TroopTest : MonoBehaviour, IDamageable
     {
         public Team Team { get; private set; }
         public string TargetTag { get; private set; }
         public float attackRange = 2f;
-        public float moveSpeed = 2f;
 
         [SerializeField] private float health = 10f;
 
@@ -52,7 +51,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public void Init(StateMachine stateMachine)
         {
-            _stateMachine = stateMachine;
+           // _stateMachine = stateMachine;
             Rb = GetComponent<Rigidbody2D>();
         }
 
@@ -71,15 +70,15 @@ namespace _Project.Scripts.Gameplay.Troops
             Gizmos.DrawWireSphere(transform.position, attackRange);
         }
 
-        private void Update()
-        {
-            _stateMachine.Update();
-        }
-
-        private void FixedUpdate()
-        {
-            _stateMachine.currentState?.FixedUpdate();
-        }
+        // private void Update()
+        // {
+        //     _stateMachine.Update();
+        // }
+        //
+        // private void FixedUpdate()
+        // {
+        //     _stateMachine.currentState?.FixedUpdate();
+        // }
 
         public void TakeDamage(float damage)
         {

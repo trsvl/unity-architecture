@@ -1,31 +1,54 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
     public class DetectionTargets : MonoBehaviour
     {
-        [SerializeField] private Troop _troop;
-
+        private Troop _troop;
         private readonly List<Collider2D> targets = new();
 
 
+        public void Enable()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Disable()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void Awake()
+        {
+            _troop = GetComponent<Troop>();
+        }
+
         private void Update()
         {
-            if (_troop.closestTargetCollider && targets.Count > 0)
+            print("UPDATE");
+            if (!_troop.ClosestTargetCollider && targets.Count > 0)
             {
+                FindTheClosestTarget();
+            }
+            else if (_troop.ClosestTargetCollider && !targets.Contains(_troop.ClosestTargetCollider))
+            {
+                print("remove target");
+                _troop.ClosestTargetCollider = null;
             }
         }
 
-        public void FindTheClosestTarget()
+        private void FindTheClosestTarget()
         {
+            print("finding the closest target");
             float closestDistance = Mathf.Infinity;
             Collider2D closestTarget = null;
 
             foreach (var targetCollider in targets)
             {
-                Vector2 directionToTarget = targetCollider.transform.position - transform.position;
+                Vector2 directionToTarget = targetCollider.transform.localPosition - transform.localPosition;
                 float directionSqr = directionToTarget.sqrMagnitude;
 
                 if (directionSqr < closestDistance)
@@ -35,11 +58,11 @@ namespace _Project.Scripts.Gameplay.Troops
                 }
             }
 
-            if (closestTarget != null &&
+            if (closestTarget &&
                 closestTarget.TryGetComponent<IDamageable>(out IDamageable closestDamageableTarget))
             {
-                _troop.closestTargetCollider = closestTarget;
-                _troop.closestDamageableTarget = closestDamageableTarget;
+                _troop.ClosestTargetCollider = closestTarget;
+                _troop.ClosestDamageableTarget = closestDamageableTarget;
             }
         }
 

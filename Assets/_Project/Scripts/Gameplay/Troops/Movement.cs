@@ -5,22 +5,25 @@ namespace _Project.Scripts.Gameplay.Troops
     public class Movement : BaseMachineState
     {
         private readonly Troop _troop;
-        private readonly float _moveSpeed;
+        private readonly DetectionTargets _detectionTargets;
 
 
-        public Movement(Troop troop, float moveSpeed)
+        public Movement(Troop troop, DetectionTargets detectionTargets)
         {
-            _moveSpeed = moveSpeed;
+            _troop = troop;
+            _detectionTargets = detectionTargets;
         }
 
         public override void OnEnter()
         {
-            _troop.rb.velocity = new Vector2(_troop.Team == Team.Player ? 1 : -1, 0) * _moveSpeed;
+            _troop.Rb.velocity = new Vector2(_troop.Team == Team.Player ? 1 : -1, 0) * _troop.moveSpeed;
+            //_detectionTargets.Enable();
         }
 
         public override void OnExit()
         {
-            _troop.rb.velocity = new Vector2(0, 0);
+            _troop.Rb.velocity = new Vector2(0, 0);
+            //_detectionTargets.Disable();
         }
     }
 }

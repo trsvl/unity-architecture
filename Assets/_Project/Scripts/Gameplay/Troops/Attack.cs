@@ -4,14 +4,12 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class Attack : BaseMachineState
     {
-        private readonly Troop _troop;
-        private readonly float _damage;
+        private readonly AttackingTroop _troop;
 
 
-        public Attack(Troop troop, float damage)
+        public Attack(AttackingTroop troop)
         {
             _troop = troop;
-            _damage = damage;
         }
 
         public override void OnEnter()
@@ -25,9 +23,9 @@ namespace _Project.Scripts.Gameplay.Troops
             //Hit()
         }
 
-        public void Hit()
+        private void Hit()
         {
-            _troop.ClosestDamageableTarget.TakeDamage(_damage);
+            _troop.ClosestDamageableTarget.TakeDamage(_troop.Config.AttackDamage);
         }
     }
 }

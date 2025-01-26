@@ -1,16 +1,15 @@
-using System;
+using _Project.Scripts.Gameplay.ScriptableObjects;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class TroopTypeInstaller : MonoBehaviour
+    public class AttackingTroopInstaller : MonoBehaviour
     {
-        [SerializeField] private Troop troopPrefab;
+        [SerializeField] private AttackingTroopSO _troopConfig;
 
-        private float health;
-        private Troop _troop;
-
+        private AttackingTroop _troop;
         private DetectionTargets detectionTargets;
+
 
         private void Start()
         {
@@ -19,7 +18,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public void Init()
         {
-            _troop = Instantiate(troopPrefab);
+            _troop = Instantiate(_troopConfig.TroopPrefab);
             detectionTargets = GetComponent<DetectionTargets>();
 
             var stateMachine = new StateMachine();
@@ -30,7 +29,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
             stateMachine.currentState = Movement().State;
 
-            _troop.Init(stateMachine);
+            _troop.Init(_troopConfig, stateMachine);
         }
 
         private StateNode Chase()
@@ -42,18 +41,18 @@ namespace _Project.Scripts.Gameplay.Troops
 
             bool Condition()
             {
-                if (!_troop.ClosestTargetCollider) return false;
+                if (!_troop.ClosestTarget) return false;
 
 
                 Vector2 directionToTarget =
-                    _troop.ClosestTargetCollider.transform.position - transform.position;
+                    _troop.ClosestTarget.transform.position - transform.position;
                 float distanceToTarget = directionToTarget.magnitude;
-                Debug.Log("attack range" + _troop.attackRange);
+                Debug.Log("attack range" + _troop.Config.AttackRange);
                 Debug.Log("magnitude distance: " + distanceToTarget);
                 Debug.Log("vector distance: " +
-                          Vector2.Distance(transform.position, _troop.ClosestTargetCollider.transform.position));
+                          Vector2.Distance(transform.position, _troop.ClosestTarget.transform.position));
 
-                return _troop.ClosestTargetCollider && distanceToTarget > _troop.attackRange;
+                return _troop.ClosestTarget && distanceToTarget > _troop.Config.AttackRange;
             }
         }
 
@@ -66,25 +65,25 @@ namespace _Project.Scripts.Gameplay.Troops
 
             bool Condition()
             {
-                return !_troop.ClosestTargetCollider;
+                return !_troop.ClosestTarget;
             }
         }
 
         private StateNode Attack()
         {
-            var attack = new Attack(_troop, 1f);
+            var attack = new Attack(_troop);
 
             StateNode stateNode = new StateNode(attack, Condition);
             return stateNode;
 
             bool Condition()
             {
-                if (!_troop.ClosestTargetCollider) return false;
+                if (!_troop.ClosestTarget) return false;
 
                 Vector2 directionToTarget =
-                    _troop.ClosestTargetCollider.transform.position - transform.position;
+                    _troop.ClosestTarget.transform.position - transform.position;
                 float distanceToTarget = directionToTarget.magnitude;
-                return _troop.ClosestTargetCollider && distanceToTarget < _troop.attackRange;
+                return _troop.ClosestTarget && distanceToTarget < _troop.Config.AttackRange;
             }
         }
     }

@@ -4,10 +4,10 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class Chase : BaseMachineState
     {
-        private readonly Troop _troop;
+        private readonly TroopBase _troop;
 
 
-        public Chase(Troop troop)
+        public Chase(TroopBase troop)
         {
             _troop = troop;
         }
@@ -19,8 +19,8 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public override void FixedUpdate()
         {
-            Vector2 direction = _troop.ClosestTargetCollider.transform.localPosition - _troop.transform.localPosition;
-            _troop.Rb.velocity = direction.normalized * _troop.moveSpeed;
+            Vector2 direction = _troop.ClosestTarget.localPosition - _troop.transform.localPosition;
+            _troop.Rb.velocity = direction.normalized * _troop.Config.MoveSpeed;
         }
 
         public override void OnExit()

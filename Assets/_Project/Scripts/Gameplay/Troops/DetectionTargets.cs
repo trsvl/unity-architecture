@@ -1,42 +1,43 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
     public class DetectionTargets : MonoBehaviour
     {
-        private Troop _troop;
-        private readonly List<Collider2D> targets = new();
+        private AttackingTroop _troop;
+        private readonly List<Transform> targets = new();
+        private bool isActive = false;
 
 
         public void Enable()
         {
-            gameObject.SetActive(true);
+            isActive = true;
         }
 
         public void Disable()
         {
-            gameObject.SetActive(false);
+            isActive = false;
         }
 
         private void Awake()
         {
-            _troop = GetComponent<Troop>();
+            _troop = GetComponent<AttackingTroop>();
         }
 
         private void Update()
         {
+            if (!isActive) return;
+
             print("UPDATE");
-            if (!_troop.ClosestTargetCollider && targets.Count > 0)
+            if (!_troop.ClosestTarget && targets.Count > 0)
             {
                 FindTheClosestTarget();
             }
-            else if (_troop.ClosestTargetCollider && !targets.Contains(_troop.ClosestTargetCollider))
+            else if (_troop.ClosestTarget && !targets.Contains(_troop.ClosestTarget))
             {
                 print("remove target");
-                _troop.ClosestTargetCollider = null;
+                _troop.ClosestTarget = null;
             }
         }
 
@@ -44,7 +45,7 @@ namespace _Project.Scripts.Gameplay.Troops
         {
             print("finding the closest target");
             float closestDistance = Mathf.Infinity;
-            Collider2D closestTarget = null;
+            Transform closestTarget = null;
 
             foreach (var targetCollider in targets)
             {
@@ -61,28 +62,28 @@ namespace _Project.Scripts.Gameplay.Troops
             if (closestTarget &&
                 closestTarget.TryGetComponent<IDamageable>(out IDamageable closestDamageableTarget))
             {
-                _troop.ClosestTargetCollider = closestTarget;
+                _troop.ClosestTarget = closestTarget;
                 _troop.ClosestDamageableTarget = closestDamageableTarget;
             }
         }
 
         private void OnTriggerEnter2D(Collider2D troopCollider)
         {
-            if (troopCollider.TryGetComponent<IDamageable>(out _))
+            if (troopCollider.CompareTag(_troop.OpponentTag))
             {
-                AddTarget(troopCollider);
+                AddTarget(troopCollider.transform);
             }
         }
 
         private void OnTriggerExit2D(Collider2D troopCollider)
         {
-            if (targets.Contains(troopCollider))
+            if (targets.Contains(troopCollider.transform))
             {
-                RemoveTarget(troopCollider);
+                RemoveTarget(troopCollider.transform);
             }
         }
 
-        private void AddTarget(Collider2D target)
+        private void AddTarget(Transform target)
         {
             if (!targets.Contains(target))
             {
@@ -90,7 +91,7 @@ namespace _Project.Scripts.Gameplay.Troops
             }
         }
 
-        private void RemoveTarget(Collider2D target)
+        private void RemoveTarget(Transform target)
         {
             if (targets.Contains(target))
             {

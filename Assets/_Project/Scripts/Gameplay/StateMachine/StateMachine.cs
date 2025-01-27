@@ -6,7 +6,17 @@ namespace _Project.Scripts.Gameplay
     {
         private readonly List<StateNode> _states = new();
 
-        public IMachineState currentState;
+        public IMachineState CurrentState
+        {
+            get => currentState;
+            set
+            {
+                currentState = value;
+                currentState.OnEnter();
+            }
+        }
+
+        private IMachineState currentState;
 
 
         public void AddTransition(StateNode node)
@@ -28,7 +38,6 @@ namespace _Project.Scripts.Gameplay
                     currentState.OnExit();
 
                     currentState = node.State;
-                    currentState.OnEnter();
                 }
 
                 currentState.Update();

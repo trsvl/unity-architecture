@@ -5,7 +5,12 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class AttackingTroop : TroopBase, IAttack
     {
-        public new AttackingTroopSO Config => base.Config as AttackingTroopSO;
+        public new AttackingTroopConfig Config
+        {
+            get { return (AttackingTroopConfig)base.Config; }
+            set { base.Config = value; }
+        }
+
 
         public IDamageable ClosestDamageableTarget
         {
@@ -22,14 +27,5 @@ namespace _Project.Scripts.Gameplay.Troops
         }
 
         private IDamageable closestDamageableTarget = null;
-        private StateMachine _stateMachine;
-        private float health;
-
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, Config.AttackRange);
-        }
     }
 }

@@ -10,6 +10,11 @@ namespace _Project.Scripts.Gameplay.Troops
         private bool isActive = false;
 
 
+        public void Init(AttackingTroop troop)
+        {
+            _troop = troop;
+        }
+
         public void Enable()
         {
             isActive = true;
@@ -18,11 +23,6 @@ namespace _Project.Scripts.Gameplay.Troops
         public void Disable()
         {
             isActive = false;
-        }
-
-        private void Awake()
-        {
-            _troop = GetComponent<AttackingTroop>();
         }
 
         private void Update()

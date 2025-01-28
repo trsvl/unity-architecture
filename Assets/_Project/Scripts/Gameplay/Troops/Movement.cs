@@ -16,17 +16,25 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public override void OnEnter()
         {
-            _troop.Rb.velocity = new Vector2(_troop.Team == Team.Player ? 1 : -1, 0) * _troop.Config.MoveSpeed;
-            Debug.Log("Movement entered " + _troop.Rb.velocity);
-
+            base.OnEnter();
             _detectionTargets.Enable();
         }
 
-        public override void OnExit()
+        public override void FixedUpdate()
         {
-            Debug.Log("Movement exited");
-            _troop.Rb.velocity = new Vector2(0, 0);
-            _detectionTargets.Disable();
+            if (IsEnter)
+            {
+                _troop.Rb.velocity = new Vector2(_troop.Team == Team.Player ? 1 : -1, 0) * _troop.Config.MoveSpeed;
+                IsEnter = false;
+            }
+
+            if (IsExit)
+            {
+                _troop.Rb.velocity = new Vector2(0, 0);
+                _detectionTargets.Disable();
+                IsExit = false;
+                IsNextState = true;
+            }
         }
     }
 }

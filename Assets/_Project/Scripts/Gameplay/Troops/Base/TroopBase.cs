@@ -34,15 +34,22 @@ namespace _Project.Scripts.Gameplay.Troops
         protected StateMachine _stateMachine;
 
 
-        public virtual void Create(Rigidbody2D rb)
+        public virtual void Create(Rigidbody2D rb, StateMachine stateMachine)
         {
-            print("Creating TroopBase");
-            Rb = rb;
-            print("RB " + rb.gameObject.name);
-            _stateMachine = new StateMachine();
-            var movement = Movement(this, GetComponent<DetectionTargets>());
-            _stateMachine.AddTransition(movement);
-            _stateMachine.CurrentState = movement.State;
+            Rb = GetComponent<Rigidbody2D>();
+            _stateMachine = stateMachine;
+            //var movement = Movement(this, GetComponent<DetectionTargets>());
+            //_stateMachine.AddTransition(movement);
+            //_stateMachine.CurrentState = movement.State;
+        }
+
+        public void Spawn(Team team)
+        {
+            Team = team;
+            gameObject.tag = team.ToString();
+            OpponentTag = (Team == Team.Player ? Team.Enemy : Team.Player).ToString();
+            closestTarget = null;
+            health = Config.MaxHealth;
         }
 
         private StateNode Movement(TroopBase troop, DetectionTargets detectionTargets)
@@ -56,15 +63,6 @@ namespace _Project.Scripts.Gameplay.Troops
             {
                 return !troop.closestTarget;
             }
-        }
-
-        public void Spawn(Team team)
-        {
-            Team = team;
-            gameObject.tag = team.ToString();
-            OpponentTag = (Team == Team.Player ? Team.Enemy : Team.Player).ToString();
-            closestTarget = null;
-            health = Config.MaxHealth;
         }
 
         private void Update()

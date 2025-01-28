@@ -9,7 +9,12 @@ namespace _Project.Scripts.Gameplay
     public class Factory
     {
         private readonly Dictionary<PoolType, IObjectPool<PoolBase>> _pools = new();
+        private readonly TroopSpawnPosition _troopSpawnPosition;
 
+        public Factory(TroopSpawnPosition troopSpawnPosition)
+        {
+            _troopSpawnPosition = troopSpawnPosition;
+        }
 
         public void Spawn(BaseConfig config)
         {
@@ -19,9 +24,11 @@ namespace _Project.Scripts.Gameplay
         public void Spawn(BaseConfig config, Team team)
         {
             PoolBase obj = GetPool(config).Get();
-            if (obj is TroopBase troop)
+            if (obj is ITroopBase troop)
             {
                 troop.Spawn(team);
+                Vector2 troopPosition = _troopSpawnPosition.SetPosition(team);
+                troop.transform.position = troopPosition;
             }
         }
 

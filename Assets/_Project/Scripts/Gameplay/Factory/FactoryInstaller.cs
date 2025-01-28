@@ -5,12 +5,17 @@ namespace _Project.Scripts.Gameplay
 {
     public class FactoryInstaller : MonoBehaviour, IInstaller
     {
+        [SerializeField] private Collider2D _playerSpawnArea;
+        [SerializeField] private Collider2D _enemySpawnArea;
         [SerializeField] private AttackingTroopConfig attackingTroopConfig;
+
         private Factory _factory;
 
         public void Register(Container container)
         {
-            _factory = new Factory();
+            var troopSpawnPosition = new TroopSpawnPosition(_playerSpawnArea, _enemySpawnArea);
+            _factory = new Factory(troopSpawnPosition);
+
             container.Bind(_factory, isSingleton: true);
 
             CreatePlayerKnight();

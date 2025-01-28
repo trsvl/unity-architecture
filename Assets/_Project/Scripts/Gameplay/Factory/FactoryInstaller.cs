@@ -12,6 +12,9 @@ namespace _Project.Scripts.Gameplay
         {
             _factory = new Factory();
             container.Bind(_factory, isSingleton: true);
+
+            CreatePlayerKnight();
+            CreateEnemyKnight();
         }
 
         [ContextMenu("Create Player knight")]

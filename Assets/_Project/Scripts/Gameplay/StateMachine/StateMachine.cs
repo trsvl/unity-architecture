@@ -33,7 +33,7 @@ namespace _Project.Scripts.Gameplay
         {
             foreach (var node in _states)
             {
-                if (currentState != node.State && node.Condition())
+                if (currentState != node.State && currentState.IsNextState && node.Condition())
                 {
                     currentState.OnExit();
 

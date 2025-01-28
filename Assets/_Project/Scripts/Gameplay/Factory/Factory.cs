@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.ScriptableObjects;
+using _Project.Scripts.Gameplay.Troops;
+using UnityEngine;
 using UnityEngine.Pool;
 
 namespace _Project.Scripts.Gameplay
@@ -9,14 +11,18 @@ namespace _Project.Scripts.Gameplay
         private readonly Dictionary<PoolType, IObjectPool<PoolBase>> _pools = new();
 
 
-        public PoolBase Spawn(BaseConfig config)
+        public void Spawn(BaseConfig config)
         {
-            return GetPool(config).Get();
+            GetPool(config).Get();
         }
 
-        public PoolBase Spawn(BaseConfig config, Team team)
+        public void Spawn(BaseConfig config, Team team)
         {
-            return GetPool(config, team).Get();
+            PoolBase obj = GetPool(config).Get();
+            if (obj is TroopBase troop)
+            {
+                troop.Spawn(team);
+            }
         }
 
         public void ReturnToPool(PoolBase obj)
@@ -30,9 +36,11 @@ namespace _Project.Scripts.Gameplay
 
             if (_pools.TryGetValue(config.PoolType, out pool)) return pool;
 
+            Debug.Log("team " + team);
+
             pool = new ObjectPool<PoolBase>(
                 config.OnCreate,
-                obj => config.OnSpawn(obj, team),
+                obj => obj.gameObject.SetActive(true),
                 config.OnRelease,
                 config.OnDestroyObject,
                 false,

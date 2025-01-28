@@ -14,6 +14,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public override void OnEnter()
         {
+            base.OnEnter();
             Debug.Log("attack");
         }
 

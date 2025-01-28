@@ -14,19 +14,30 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public override void OnEnter()
         {
+            base.OnEnter();
             Debug.Log("Chasing troop");
         }
 
         public override void FixedUpdate()
         {
-            Vector2 direction = _troop.ClosestTarget.localPosition - _troop.transform.localPosition;
-            _troop.Rb.velocity = direction.normalized * _troop.Config.MoveSpeed;
+            if (IsEnter)
+            {
+                Vector2 direction = _troop.ClosestTarget.position - _troop.transform.position;
+                _troop.Rb.velocity = direction.normalized * _troop.Config.MoveSpeed;
+            }
+
+            if (IsExit)
+            {
+                _troop.Rb.velocity = new Vector2(0, 0);
+                IsNextState = true;
+                IsExit = false;
+            }
         }
 
         public override void OnExit()
         {
+            base.OnExit();
             Debug.Log("exit chase");
-            _troop.Rb.velocity = new Vector2(0, 0);
         }
     }
 }

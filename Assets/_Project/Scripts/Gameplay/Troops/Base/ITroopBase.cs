@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class TroopBase : PoolBase, ITroop, IDamageable
+    public class ITroopBase : PoolBase, ITroop, IDamageable
     {
         public Team Team { get; private set; }
         public string OpponentTag { get; private set; }
@@ -31,16 +31,13 @@ namespace _Project.Scripts.Gameplay.Troops
 
         private Transform closestTarget;
         private float health;
-        protected StateMachine _stateMachine;
+        private StateMachine _stateMachine;
 
 
         public virtual void Create(Rigidbody2D rb, StateMachine stateMachine)
         {
             Rb = GetComponent<Rigidbody2D>();
             _stateMachine = stateMachine;
-            //var movement = Movement(this, GetComponent<DetectionTargets>());
-            //_stateMachine.AddTransition(movement);
-            //_stateMachine.CurrentState = movement.State;
         }
 
         public void Spawn(Team team)
@@ -48,21 +45,9 @@ namespace _Project.Scripts.Gameplay.Troops
             Team = team;
             gameObject.tag = team.ToString();
             OpponentTag = (Team == Team.Player ? Team.Enemy : Team.Player).ToString();
+            gameObject.transform.rotation = Quaternion.Euler(0f, Team == Team.Player ? 0f : 180f, 0f);
             closestTarget = null;
             health = Config.MaxHealth;
-        }
-
-        private StateNode Movement(TroopBase troop, DetectionTargets detectionTargets)
-        {
-            var move = new Movement(troop, detectionTargets);
-
-            StateNode stateNode = new StateNode(move, Condition);
-            return stateNode;
-
-            bool Condition()
-            {
-                return !troop.closestTarget;
-            }
         }
 
         private void Update()

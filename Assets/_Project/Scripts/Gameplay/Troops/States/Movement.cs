@@ -4,18 +4,19 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class Movement : BaseMachineState
     {
-        private readonly TroopBase _troop;
+        private readonly ITroopBase _iTroop;
         private readonly DetectionTargets _detectionTargets;
 
 
-        public Movement(TroopBase troop, DetectionTargets detectionTargets)
+        public Movement(ITroopBase iTroop, DetectionTargets detectionTargets)
         {
-            _troop = troop;
+            _iTroop = iTroop;
             _detectionTargets = detectionTargets;
         }
 
         public override void OnEnter()
         {
+            Debug.Log("enter movement");
             base.OnEnter();
             _detectionTargets.Enable();
         }
@@ -24,13 +25,14 @@ namespace _Project.Scripts.Gameplay.Troops
         {
             if (IsEnter)
             {
-                _troop.Rb.velocity = new Vector2(_troop.Team == Team.Player ? 1 : -1, 0) * _troop.Config.MoveSpeed;
+                _iTroop.Rb.velocity = new Vector2(_iTroop.Team == Team.Player ? 1 : -1, 0) * _iTroop.Config.MoveSpeed;
                 IsEnter = false;
             }
 
             if (IsExit)
             {
-                _troop.Rb.velocity = new Vector2(0, 0);
+                Debug.Log("exit movement");
+                _iTroop.Rb.velocity = new Vector2(0, 0);
                 _detectionTargets.Disable();
                 IsExit = false;
                 IsNextState = true;

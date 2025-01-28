@@ -4,10 +4,10 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class Chase : BaseMachineState
     {
-        private readonly TroopBase _troop;
+        private readonly ITroopBase _troop;
 
 
-        public Chase(TroopBase troop)
+        public Chase(ITroopBase troop)
         {
             _troop = troop;
         }

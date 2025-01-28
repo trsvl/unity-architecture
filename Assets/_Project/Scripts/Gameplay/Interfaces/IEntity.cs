@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public interface ITroop
+public interface IEntity
 {
     public Team Team { get; }
-    public string OpponentTag { get; }
     public Rigidbody2D Rb { get; }
-    public Transform ClosestTarget { get; set; }
 }
 
 public interface IDamageable
@@ -18,12 +16,8 @@ public interface IAttack
     public IDamageable ClosestDamageableTarget { get; set; }
 }
 
-public interface IMove
+public interface ITroop : IEntity
 {
-    public float MoveSpeed { get; set; }
-}
-
-public interface IChase
-{
-    public void DoChase();
+    public string OpponentTag { get; }
+    public Transform ClosestTarget { get; set; }
 }

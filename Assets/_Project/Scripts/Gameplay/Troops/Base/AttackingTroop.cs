@@ -1,16 +1,14 @@
 using _Project.Scripts.Gameplay.ScriptableObjects;
-using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class AttackingTroop : TroopBase, IAttack
+    public class AttackingTroop : ITroopBase, IAttack
     {
         public new AttackingTroopConfig Config
         {
             get { return (AttackingTroopConfig)base.Config; }
             set { base.Config = value; }
         }
-
 
         public IDamageable ClosestDamageableTarget
         {

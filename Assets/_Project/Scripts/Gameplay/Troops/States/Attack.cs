@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class Attack : BaseMachineState
+    public class Attack : TroopState
     {
         private readonly AttackingTroop _troop;
 
 
-        public Attack(AttackingTroop troop)
+        public Attack(IAnimationListener animationListener, AttackingTroop troop) : base(animationListener)
         {
             _troop = troop;
         }
@@ -15,11 +15,12 @@ namespace _Project.Scripts.Gameplay.Troops
         public override void OnEnter()
         {
             base.OnEnter();
-            Debug.Log("attack");
+            //attack first time
         }
 
         public override void Update()
         {
+            base.Update();
             //timer
             //Hit()
         }

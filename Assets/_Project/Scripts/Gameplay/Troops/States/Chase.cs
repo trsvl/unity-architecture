@@ -2,20 +2,14 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class Chase : BaseMachineState
+    public class Chase : TroopState
     {
-        private readonly ITroopBase _troop;
+        private readonly TroopBase _troop;
 
 
-        public Chase(ITroopBase troop)
+        public Chase(IAnimationListener animationListener, TroopBase troop) : base(animationListener)
         {
             _troop = troop;
-        }
-
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            Debug.Log("Chasing troop");
         }
 
         public override void FixedUpdate()
@@ -32,12 +26,6 @@ namespace _Project.Scripts.Gameplay.Troops
                 IsNextState = true;
                 IsExit = false;
             }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-            Debug.Log("exit chase");
         }
     }
 }

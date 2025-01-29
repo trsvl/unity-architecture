@@ -1,9 +1,9 @@
-using _Project.Scripts.Gameplay.ScriptableObjects;
+using _Project.Scripts.Gameplay.Troops;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class ITroopBase : PoolBase, ITroop, IDamageable
+    public class TroopBase : PoolBase, ITroop, IDamageable
     {
         public Team Team { get; private set; }
         public string OpponentTag { get; private set; }

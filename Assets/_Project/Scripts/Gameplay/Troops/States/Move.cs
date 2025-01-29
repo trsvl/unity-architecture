@@ -2,21 +2,21 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class Movement : BaseMachineState
+    public class Move : TroopState
     {
-        private readonly ITroopBase _iTroop;
+        private readonly TroopBase _troop;
         private readonly DetectionTargets _detectionTargets;
 
 
-        public Movement(ITroopBase iTroop, DetectionTargets detectionTargets)
+        public Move(IAnimationListener animationListener, TroopBase troop, DetectionTargets detectionTargets) : base(
+            animationListener)
         {
-            _iTroop = iTroop;
+            _troop = troop;
             _detectionTargets = detectionTargets;
         }
 
         public override void OnEnter()
         {
-            Debug.Log("enter movement");
             base.OnEnter();
             _detectionTargets.Enable();
         }
@@ -25,14 +25,13 @@ namespace _Project.Scripts.Gameplay.Troops
         {
             if (IsEnter)
             {
-                _iTroop.Rb.velocity = new Vector2(_iTroop.Team == Team.Player ? 1 : -1, 0) * _iTroop.Config.MoveSpeed;
+                _troop.Rb.velocity = new Vector2(_troop.Team == Team.Player ? 1 : -1, 0) * _troop.Config.MoveSpeed;
                 IsEnter = false;
             }
 
             if (IsExit)
             {
-                Debug.Log("exit movement");
-                _iTroop.Rb.velocity = new Vector2(0, 0);
+                _troop.Rb.velocity = new Vector2(0, 0);
                 _detectionTargets.Disable();
                 IsExit = false;
                 IsNextState = true;

@@ -1,8 +1,9 @@
-using _Project.Scripts.Gameplay.ScriptableObjects;
+using System;
+using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class AttackingTroop : ITroopBase, IAttack
+    public class AttackingTroop : TroopBase, IAttack
     {
         public new AttackingTroopConfig Config
         {
@@ -23,7 +24,14 @@ namespace _Project.Scripts.Gameplay.Troops
             }
             set => closestDamageableTarget = value;
         }
-
+ 
         private IDamageable closestDamageableTarget = null;
+
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, Config.AttackRange);
+        }
     }
 }

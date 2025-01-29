@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Project.Scripts.Gameplay.ScriptableObjects
+namespace _Project.Scripts.Gameplay.Troops
 {
     [CreateAssetMenu(fileName = "TroopBase", menuName = "SO/Troops/Base", order = 0)]
     public class TroopBaseConfig : BaseConfig

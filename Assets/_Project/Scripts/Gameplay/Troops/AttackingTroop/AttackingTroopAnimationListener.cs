@@ -1,14 +1,15 @@
-using System.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class AttackingTroopAnimationListener : IAnimationListener
+    public class AttackingTroopAnimationListener : MonoBehaviour, IAttackAnimationListener
     {
-        private readonly Animator _animator;
+        private Animator _animator;
+        public bool IsReadyForNextAnimation { get; private set; } = false;
+        public bool IsReadyForAttack { get; private set; } = true;
 
-
-        public AttackingTroopAnimationListener(Animator animator)
+        public void Init(Animator animator)
         {
             _animator = animator;
         }
@@ -17,26 +18,54 @@ namespace _Project.Scripts.Gameplay.Troops
         {
             switch (action)
             {
+                case Idle:
+                    PlayAnimation("Idle");
+                    break;
                 case Move:
-                    _ = PlayAnimation("Run");
+                    PlayAnimation("Run");
                     break;
                 case Chase:
-                    _ = PlayAnimation("Run");
+                    PlayAnimation("Run");
                     break;
                 case Attack:
-                    _ = PlayAnimation("Attack_1");
+                    StartCoroutine(PlayAttack("Attack_1", 1f));
                     break;
             }
         }
 
-        public void NotifyExit(IStateNode action)
+        private void PlayAnimation(string animationName)
         {
+            _animator.Play(animationName);
         }
 
-        private async Task  PlayAnimation(string animationName)
+        private IEnumerator PlayAttack(string animationName, float firstDelayValue)
         {
-            await Task.Yield();
+            IsReadyForNextAnimation = false;
+            IsReadyForAttack = false;
+
             _animator.Play(animationName);
+            float animationDuration = _animator.GetCurrentAnimatorStateInfo(0).length - 0.01f;
+            float firstDelay = animationDuration * firstDelayValue;
+            float secondDelay = animationDuration - firstDelay;
+
+            yield return new WaitForSeconds(firstDelay);
+
+            IsReadyForAttack = true;
+
+            yield return new WaitForSeconds(secondDelay);
+
+            IsReadyForNextAnimation = true;
+        }
+
+        private IEnumerator PlayFullAnimation(string animationName)
+        {
+            IsReadyForNextAnimation = false;
+
+            _animator.Play(animationName);
+            float animationDuration = _animator.GetCurrentAnimatorStateInfo(0).length - 0.01f;
+            yield return new WaitForSeconds(animationDuration);
+
+            IsReadyForNextAnimation = true;
         }
     }
 }

@@ -5,6 +5,7 @@ namespace _Project.Scripts.Gameplay
     public class StateMachine
     {
         private readonly List<StateNode> _states = new();
+        private readonly List<TransitionStateNode> _transitionStates = new();
 
         public IStateNode CurrentStateNode
         {
@@ -24,22 +25,43 @@ namespace _Project.Scripts.Gameplay
             _states.Add(node);
         }
 
+        public void AddTransition(TransitionStateNode node)
+        {
+            _transitionStates.Add(node);
+        }
+
         public void RemoveTransition(StateNode node)
         {
             _states.Remove(node);
         }
 
+        public void RemoveTransition(TransitionStateNode node)
+        {
+            _transitionStates.Remove(node);
+        }
+
         public void Update()
         {
-            foreach (var node in _states)
+            foreach (var localState in _states)
             {
-                if (_currentStateNode != node.Node && node.Condition())
+                if (_currentStateNode != localState.Node && localState.Condition())
                 {
                     _currentStateNode.OnExit();
-                    _currentStateNode = node.Node;
+                    _currentStateNode = localState.Node;
                     _currentStateNode.OnEnter();
                 }
             }
+
+            foreach (var localState in _transitionStates)
+            {
+                if (_currentStateNode == localState.FromNode && localState.Condition())
+                {
+                    _currentStateNode.OnExit();
+                    _currentStateNode = localState.ToNode;
+                    _currentStateNode.OnEnter();
+                }
+            }
+
 
             _currentStateNode.Update();
         }

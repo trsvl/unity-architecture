@@ -27,6 +27,5 @@ public class TroopStateNode : IStateNode
     public virtual void OnExit()
     {
         IsEnter = false;
-        _animationListener.NotifyExit(this);
     }
 }

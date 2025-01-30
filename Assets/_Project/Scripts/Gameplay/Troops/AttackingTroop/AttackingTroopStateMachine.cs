@@ -11,16 +11,19 @@ namespace _Project.Scripts.Gameplay._troops
         private readonly StopWatchTimer _attackTimer;
 
 
-        public AttackingTroopStateMachine(AttackingTroop troop, Animator animator, StopWatchTimer attackTimer)
+        public AttackingTroopStateMachine(AttackingTroop troop, AttackingTroopAnimationListener animationListener,
+            StopWatchTimer attackTimer)
         {
             _troop = troop;
-            _animationListener = new AttackingTroopAnimationListener(animator);
+            _animationListener = animationListener;
             _attackTimer = attackTimer;
         }
 
         public StateMachine GetStateMachine()
         {
             var stateMachine = new StateMachine();
+
+            var idleNode = Idle();
 
             var movement = Movement();
             var chase = Chase();
@@ -29,10 +32,28 @@ namespace _Project.Scripts.Gameplay._troops
             stateMachine.AddTransition(movement);
             stateMachine.AddTransition(chase);
             stateMachine.AddTransition(attack);
+            stateMachine.AddTransition(AttackToIdle(attack.Node, idleNode));
 
-            stateMachine.CurrentStateNode = movement.Node;
+            stateMachine.CurrentStateNode = idleNode;
 
             return stateMachine;
+        }
+
+        private TransitionStateNode AttackToIdle(IStateNode from, IStateNode to)
+        {
+            var transitionStateNode = new TransitionStateNode(from, to, Condition);
+            return transitionStateNode;
+
+            bool Condition()
+            {
+                return !_troop.AttackTimer.IsReady && _troop.AnimationListener.IsReadyForNextAnimation;
+            }
+        }
+
+        private IStateNode Idle()
+        {
+            var idle = new Idle(_animationListener);
+            return idle;
         }
 
         private StateNode Chase()
@@ -82,7 +103,8 @@ namespace _Project.Scripts.Gameplay._troops
                 Vector2 directionToTarget =
                     _troop.ClosestTarget.position - _troop.transform.position;
                 float distanceToTarget = directionToTarget.magnitude;
-                return _troop.ClosestTarget && distanceToTarget < _troop.Config.AttackRange;
+                return _troop.AnimationListener.IsReadyForAttack && _troop.AttackTimer.IsReady &&
+                       _troop.ClosestTarget && distanceToTarget < _troop.Config.AttackRange;
             }
         }
     }

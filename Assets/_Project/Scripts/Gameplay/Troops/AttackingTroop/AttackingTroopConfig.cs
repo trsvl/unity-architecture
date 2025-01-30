@@ -19,12 +19,17 @@ namespace _Project.Scripts.Gameplay.Troops
             var troop = obj.GetComponent<AttackingTroop>();
             troop.Config = this;
             var rb = troop.gameObject.GetComponent<Rigidbody2D>();
+
             var animator = troop.gameObject.GetComponent<Animator>();
+            var animationListener = troop.GetComponent<AttackingTroopAnimationListener>();
+            animationListener.Init(animator);
+            troop.AnimationListener = animationListener;
+
             var detectionTargets = troop.GetComponentInChildren<DetectionTargets>();
             detectionTargets.Init(troop);
 
             var attackTimer = new StopWatchTimer(AttackCooldown);
-            var stateMachine = new AttackingTroopStateMachine(troop, animator, attackTimer).GetStateMachine();
+            var stateMachine = new AttackingTroopStateMachine(troop, animationListener, attackTimer).GetStateMachine();
 
             troop.Create(rb, stateMachine, attackTimer);
             obj.SetActive(false);

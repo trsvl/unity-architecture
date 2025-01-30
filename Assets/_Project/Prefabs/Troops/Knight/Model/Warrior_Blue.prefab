@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 7170314563786321300}
   - component: {fileID: 2810878742751773099}
   - component: {fileID: 1199952157175399350}
+  - component: {fileID: -6756779981462303740}
   - component: {fileID: 3290186528054230256}
   m_Layer: 0
   m_Name: Warrior_Blue
@@ -272,6 +273,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-6756779981462303740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387683836843021711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93e124af5b140648d2204353eb094b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3290186528054230256
 MonoBehaviour:
   m_ObjectHideFlags: 0

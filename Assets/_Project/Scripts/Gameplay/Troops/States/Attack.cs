@@ -7,18 +7,20 @@ namespace _Project.Scripts.Gameplay.Troops
     {
         private readonly AttackingTroop _troop;
         private readonly StopWatchTimer _attackTimer;
+        private IAttackAnimationListener _animationListener;
 
 
-        public Attack(IAnimationListener animationListener, AttackingTroop troop, StopWatchTimer attackTimer) : base(
-            animationListener)
+        public Attack(IAttackAnimationListener animationListener, AttackingTroop troop, StopWatchTimer attackTimer) :
+            base(animationListener)
         {
             _troop = troop;
             _attackTimer = attackTimer;
+            _animationListener = animationListener;
         }
 
         public override void Update()
         {
-            if (_attackTimer.IsReady)
+            if (_animationListener.IsReadyForAttack && _attackTimer.IsReady)
             {
                 Hit();
             }

@@ -29,17 +29,17 @@ namespace _Project.Scripts.Gameplay.Troops
             set => closestTarget = value;
         }
 
+        public IAnimationListener AnimationListener { get;  set; }
+
         private Transform closestTarget;
         private float health;
         private StateMachine _stateMachine;
-        private StopWatchTimer _attackTimer;
 
 
-        public virtual void Create(Rigidbody2D rb, StateMachine stateMachine, StopWatchTimer attackTimer)
+        protected void Create(Rigidbody2D rb, StateMachine stateMachine)
         {
             Rb = rb;
             _stateMachine = stateMachine;
-            _attackTimer = attackTimer;
         }
 
         public void Spawn(Team team)
@@ -52,9 +52,8 @@ namespace _Project.Scripts.Gameplay.Troops
             health = Config.MaxHealth;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
-            _attackTimer.Update(Time.deltaTime);
             _stateMachine.Update();
         }
 

@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.Troops;
+using _Project.Scripts.GameSystemLogic;
 using UnityEngine;
 using UnityEngine.Pool;
 
 namespace _Project.Scripts.Gameplay
 {
-    public class Factory
+    public class Factory : Singleton<Factory>
     {
+        private TroopSpawnPosition _troopSpawnPosition;
         private readonly Dictionary<PoolType, IObjectPool<PoolBase>> _pools = new();
-        private readonly TroopSpawnPosition _troopSpawnPosition;
 
-        public Factory(TroopSpawnPosition troopSpawnPosition)
+
+        public void Init(TroopSpawnPosition troopSpawnPosition)
         {
             _troopSpawnPosition = troopSpawnPosition;
         }

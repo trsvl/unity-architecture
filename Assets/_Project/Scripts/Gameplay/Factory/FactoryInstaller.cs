@@ -1,4 +1,5 @@
 using _Project.Scripts.Gameplay.Troops;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay
@@ -11,13 +12,13 @@ namespace _Project.Scripts.Gameplay
 
         private Factory _factory;
 
+
         public void Register(Container container)
         {
             var troopSpawnPosition = new TroopSpawnPosition(_playerSpawnArea, _enemySpawnArea);
-            _factory = new Factory(troopSpawnPosition);
-
-            container.Bind(_factory, isSingleton: true);
-
+            var obj = Instantiate(Resources.Load("Gameplay/Factory"));
+            _factory = obj.GetComponent<Factory>();
+            _factory?.Init(troopSpawnPosition);
             CreatePlayerKnight();
             CreateEnemyKnight();
         }

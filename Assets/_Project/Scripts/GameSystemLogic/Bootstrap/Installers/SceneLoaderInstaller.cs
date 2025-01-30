@@ -6,7 +6,7 @@ namespace _Project.Scripts.GameSystemLogic
     {
         public void Load()
         {
-            var sceneLoader = Instantiate(Resources.Load("Bootstrap/SceneLoader")) as SceneLoader;
+            var sceneLoader = Instantiate(Resources.Load("Bootstrap/SceneLoader"));
         }
     }
 }

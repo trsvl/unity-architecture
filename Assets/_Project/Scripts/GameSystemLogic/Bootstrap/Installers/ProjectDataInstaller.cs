@@ -6,7 +6,7 @@ namespace _Project.Scripts.GameSystemLogic
     {
         public void Load()
         {
-            var projectData = Instantiate(Resources.Load("Bootstrap/ProjectData")) as ProjectData;
+            var projectData = Instantiate(Resources.Load("Bootstrap/ProjectData"));
         }
     }
 }

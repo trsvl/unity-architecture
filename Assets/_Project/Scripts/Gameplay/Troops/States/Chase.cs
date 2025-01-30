@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class Chase : TroopState
+    public class Chase : TroopStateNode
     {
         private readonly TroopBase _troop;
 
@@ -14,18 +14,14 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public override void FixedUpdate()
         {
-            if (IsEnter)
-            {
-                Vector2 direction = _troop.ClosestTarget.position - _troop.transform.position;
-                _troop.Rb.velocity = direction.normalized * _troop.Config.MoveSpeed;
-            }
+            Vector2 direction = _troop.ClosestTarget.position - _troop.transform.position;
+            _troop.Rb.velocity = direction.normalized * _troop.Config.MoveSpeed;
+        }
 
-            if (IsExit)
-            {
-                _troop.Rb.velocity = new Vector2(0, 0);
-                IsNextState = true;
-                IsExit = false;
-            }
+        public override void OnExit()
+        {
+            base.OnExit();
+            _troop.Rb.velocity = new Vector2(0, 0);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace _Project.Scripts.Gameplay.Troops
             _animator = animator;
         }
 
-        public void Notify(IMachineState action)
+        public void Notify(IStateNode action)
         {
             switch (action)
             {
@@ -29,7 +29,7 @@ namespace _Project.Scripts.Gameplay.Troops
             }
         }
 
-        public void NotifyExit(IMachineState action)
+        public void NotifyExit(IStateNode action)
         {
         }
 

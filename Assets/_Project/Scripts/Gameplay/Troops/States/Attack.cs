@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class Attack : TroopState
+    public class Attack : TroopStateNode
     {
         private readonly AttackingTroop _troop;
 

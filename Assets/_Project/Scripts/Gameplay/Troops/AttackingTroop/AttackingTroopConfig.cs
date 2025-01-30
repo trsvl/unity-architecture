@@ -22,7 +22,7 @@ namespace _Project.Scripts.Gameplay.Troops
             var detectionTargets = troop.GetComponentInChildren<DetectionTargets>();
             detectionTargets.Init(troop);
 
-            var stateMachine = new AttackingTroopStateMachine(troop, animator, detectionTargets).GetStateMachine();
+            var stateMachine = new AttackingTroopStateMachine(troop, animator).GetStateMachine();
 
             troop.Create(rb, stateMachine);
             obj.SetActive(false);

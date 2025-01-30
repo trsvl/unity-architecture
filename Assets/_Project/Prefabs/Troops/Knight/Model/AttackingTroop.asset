@@ -18,3 +18,4 @@ MonoBehaviour:
   <MoveSpeed>k__BackingField: 2
   <AttackDamage>k__BackingField: 1
   <AttackRange>k__BackingField: 0.4
+  <AttackCooldown>k__BackingField: 2

@@ -1,5 +1,5 @@
 using _Project.Scripts.Gameplay._troops;
-using _Project.Scripts.Gameplay.Troops;
+using _Project.Scripts.Utils;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
@@ -9,6 +9,7 @@ namespace _Project.Scripts.Gameplay.Troops
     {
         [field: SerializeField] public float AttackDamage { get; private set; }
         [field: SerializeField] public float AttackRange { get; private set; }
+        [field: SerializeField] public float AttackCooldown { get; private set; }
 
 
         public override PoolBase OnCreate()
@@ -22,9 +23,10 @@ namespace _Project.Scripts.Gameplay.Troops
             var detectionTargets = troop.GetComponentInChildren<DetectionTargets>();
             detectionTargets.Init(troop);
 
-            var stateMachine = new AttackingTroopStateMachine(troop, animator).GetStateMachine();
+            var attackTimer = new StopWatchTimer(AttackCooldown);
+            var stateMachine = new AttackingTroopStateMachine(troop, animator, attackTimer).GetStateMachine();
 
-            troop.Create(rb, stateMachine);
+            troop.Create(rb, stateMachine, attackTimer);
             obj.SetActive(false);
             return troop;
         }

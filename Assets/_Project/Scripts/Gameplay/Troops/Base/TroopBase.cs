@@ -1,4 +1,4 @@
-using _Project.Scripts.Gameplay.Troops;
+using _Project.Scripts.Utils;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
@@ -32,12 +32,14 @@ namespace _Project.Scripts.Gameplay.Troops
         private Transform closestTarget;
         private float health;
         private StateMachine _stateMachine;
+        private StopWatchTimer _attackTimer;
 
 
-        public virtual void Create(Rigidbody2D rb, StateMachine stateMachine)
+        public virtual void Create(Rigidbody2D rb, StateMachine stateMachine, StopWatchTimer attackTimer)
         {
             Rb = rb;
             _stateMachine = stateMachine;
+            _attackTimer = attackTimer;
         }
 
         public void Spawn(Team team)
@@ -52,6 +54,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
         private void Update()
         {
+            _attackTimer.Update(Time.deltaTime);
             _stateMachine.Update();
         }
 
@@ -66,7 +69,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
             if (health <= 0)
             {
-                //return to pool
+                Factory.Instance.ReturnToPool(this);
             }
         }
     }

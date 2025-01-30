@@ -36,7 +36,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public virtual void Create(Rigidbody2D rb, StateMachine stateMachine)
         {
-            Rb = GetComponent<Rigidbody2D>();
+            Rb = rb;
             _stateMachine = stateMachine;
         }
 
@@ -57,7 +57,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
         private void FixedUpdate()
         {
-            _stateMachine.CurrentState?.FixedUpdate();
+            _stateMachine.FixedUpdate();
         }
 
         public void TakeDamage(float damage)

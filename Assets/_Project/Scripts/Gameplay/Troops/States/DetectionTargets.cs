@@ -7,7 +7,6 @@ namespace _Project.Scripts.Gameplay.Troops
     {
         private AttackingTroop _troop;
         private readonly List<Transform> targets = new();
-        private bool isActive = false;
 
 
         public void Init(AttackingTroop troop)
@@ -15,47 +14,32 @@ namespace _Project.Scripts.Gameplay.Troops
             _troop = troop;
         }
 
-        public void Enable()
-        {
-            isActive = true;
-        }
-
-        public void Disable()
-        {
-            isActive = false;
-        }
-
         private void Update()
         {
-            if (!isActive) return;
-
-            print("UPDATE");
             if (!_troop.ClosestTarget && targets.Count > 0)
             {
                 FindTheClosestTarget();
             }
             else if (_troop.ClosestTarget && !targets.Contains(_troop.ClosestTarget))
             {
-                print("remove target");
                 _troop.ClosestTarget = null;
             }
         }
 
         private void FindTheClosestTarget()
         {
-            print("finding the closest target");
             float closestDistance = Mathf.Infinity;
             Transform closestTarget = null;
 
-            foreach (var targetCollider in targets)
+            foreach (var target in targets)
             {
-                Vector2 directionToTarget = targetCollider.transform.localPosition - transform.localPosition;
+                Vector2 directionToTarget = target.transform.localPosition - transform.localPosition;
                 float directionSqr = directionToTarget.sqrMagnitude;
 
                 if (directionSqr < closestDistance)
                 {
                     closestDistance = directionSqr;
-                    closestTarget = targetCollider;
+                    closestTarget = target;
                 }
             }
 

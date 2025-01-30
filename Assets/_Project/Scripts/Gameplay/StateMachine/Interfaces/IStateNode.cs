@@ -1,8 +1,6 @@
-public interface IMachineState
+public interface IStateNode
 {
     public bool IsEnter { get; set; }
-    public bool IsExit { get; set; }
-    public bool IsNextState { get; set; }
 
     public void OnEnter();
     public void Update();

@@ -7,14 +7,12 @@ namespace _Project.Scripts.Gameplay._troops
     {
         private readonly AttackingTroop _troop;
         private readonly AttackingTroopAnimationListener _animationListener;
-        private readonly DetectionTargets _detectionTargets;
 
 
-        public AttackingTroopStateMachine(AttackingTroop troop, Animator animator, DetectionTargets detectionTargets)
+        public AttackingTroopStateMachine(AttackingTroop troop, Animator animator)
         {
             _troop = troop;
             _animationListener = new AttackingTroopAnimationListener(animator);
-            _detectionTargets = detectionTargets;
         }
 
         public StateMachine GetStateMachine()
@@ -29,7 +27,7 @@ namespace _Project.Scripts.Gameplay._troops
             stateMachine.AddTransition(chase);
             stateMachine.AddTransition(attack);
 
-            stateMachine.CurrentState = movement.State;
+            stateMachine.CurrentStateNode = movement.Node;
 
             return stateMachine;
         }
@@ -47,7 +45,7 @@ namespace _Project.Scripts.Gameplay._troops
 
 
                 Vector2 directionToTarget =
-                    _troop.ClosestTarget.transform.position - _troop.transform.position;
+                    _troop.ClosestTarget.position - _troop.transform.position;
                 float distanceToTarget = directionToTarget.magnitude;
 
                 return _troop.ClosestTarget && distanceToTarget > _troop.Config.AttackRange;
@@ -56,7 +54,7 @@ namespace _Project.Scripts.Gameplay._troops
 
         private StateNode Movement()
         {
-            var move = new Move(_animationListener, _troop, _detectionTargets);
+            var move = new Move(_animationListener, _troop);
 
             StateNode stateNode = new StateNode(move, Condition);
             return stateNode;
@@ -79,7 +77,7 @@ namespace _Project.Scripts.Gameplay._troops
                 if (!_troop.ClosestTarget) return false;
 
                 Vector2 directionToTarget =
-                    _troop.ClosestTarget.transform.position - _troop.transform.position;
+                    _troop.ClosestTarget.position - _troop.transform.position;
                 float distanceToTarget = directionToTarget.magnitude;
                 return _troop.ClosestTarget && distanceToTarget < _troop.Config.AttackRange;
             }

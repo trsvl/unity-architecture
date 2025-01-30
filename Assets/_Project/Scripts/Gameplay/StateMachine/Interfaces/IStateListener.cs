@@ -1,4 +1,4 @@
 public interface IStateListener
 {
-    public void Notify(IMachineState action);
+    public void Notify(IStateNode action);
 }

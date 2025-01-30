@@ -6,17 +6,17 @@ namespace _Project.Scripts.Gameplay
     {
         private readonly List<StateNode> _states = new();
 
-        public IMachineState CurrentState
+        public IStateNode CurrentStateNode
         {
-            get => currentState;
+            get => _currentStateNode;
             set
             {
-                currentState = value;
-                currentState.OnEnter();
+                _currentStateNode = value;
+                _currentStateNode.OnEnter();
             }
         }
 
-        private IMachineState currentState;
+        private IStateNode _currentStateNode;
 
 
         public void AddTransition(StateNode node)
@@ -33,20 +33,20 @@ namespace _Project.Scripts.Gameplay
         {
             foreach (var node in _states)
             {
-                if (currentState != node.State && node.Condition())
+                if (_currentStateNode != node.Node && node.Condition())
                 {
-                    if (!currentState.IsNextState)
-                    {
-                        currentState.OnExit();
-                    }
-                    else
-                    {
-                        currentState = node.State;
-                    }
+                    _currentStateNode.OnExit();
+                    _currentStateNode = node.Node;
+                    _currentStateNode.OnEnter();
                 }
-
-                currentState.Update();
             }
+
+            _currentStateNode.Update();
+        }
+
+        public void FixedUpdate()
+        {
+            _currentStateNode.FixedUpdate();
         }
     }
 }

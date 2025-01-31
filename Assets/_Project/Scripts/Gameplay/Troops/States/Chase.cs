@@ -4,13 +4,11 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class Chase : TroopStateNode
     {
-        private readonly TroopBase _troop;
         private Vector2 _troopVelocityRandomValue;
 
 
-        public Chase(IAnimationListener animationListener, TroopBase troop) : base(animationListener)
+        public Chase(IAnimationListener animationListener, TroopBase troop) : base(animationListener, troop)
         {
-            _troop = troop;
         }
 
         public override void OnEnter()

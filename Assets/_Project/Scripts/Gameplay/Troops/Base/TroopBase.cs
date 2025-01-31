@@ -45,9 +45,9 @@ namespace _Project.Scripts.Gameplay.Troops
             Team = team;
             gameObject.tag = team.ToString();
             OpponentTag = (Team == Team.Player ? Team.Enemy : Team.Player).ToString();
-            gameObject.transform.rotation = Quaternion.Euler(0f, Team == Team.Player ? 0f : 180f, 0f);
             closestTarget = null;
             health = Config.MaxHealth;
+            CheckRotation();
         }
 
         protected virtual void Update()
@@ -67,6 +67,22 @@ namespace _Project.Scripts.Gameplay.Troops
             if (health <= 0)
             {
                 Factory.Instance.ReturnToPool(this);
+            }
+        }
+
+        public void CheckRotation()
+        {
+            if (ClosestTarget && transform.position.x > ClosestTarget.position.x)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+            else if (ClosestTarget && transform.position.x < ClosestTarget.position.x)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
+            else
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0f, Team == Team.Player ? 0f : 180f, 0f);
             }
         }
     }

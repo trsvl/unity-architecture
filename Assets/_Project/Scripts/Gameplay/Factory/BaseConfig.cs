@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Project.Scripts.Gameplay.Troops
+namespace _Project.Scripts.Gameplay
 {
     [CreateAssetMenu(fileName = "BaseConfig", menuName = "SO/Troops", order = 0)]
     public class BaseConfig : ScriptableObject

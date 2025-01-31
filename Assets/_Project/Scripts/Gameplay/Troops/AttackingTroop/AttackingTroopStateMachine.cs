@@ -23,37 +23,38 @@ namespace _Project.Scripts.Gameplay._troops
         {
             var stateMachine = new StateMachine();
 
-            var idleNode = Idle();
-
+            var idle = Idle();
             var movement = Movement();
             var chase = Chase();
             var attack = Attack();
 
+
+            stateMachine.AddTransition(idle);
             stateMachine.AddTransition(movement);
             stateMachine.AddTransition(chase);
             stateMachine.AddTransition(attack);
-            stateMachine.AddTransition(AttackToIdle(attack.Node, idleNode));
 
-            stateMachine.CurrentStateNode = idleNode;
+            stateMachine.CurrentStateNode = idle.Node;
 
             return stateMachine;
         }
 
-        private TransitionStateNode AttackToIdle(IStateNode from, IStateNode to)
+        private StateNode Idle()
         {
-            var transitionStateNode = new TransitionStateNode(from, to, Condition);
-            return transitionStateNode;
+            var idle = new Idle(_animationListener);
+
+            StateNode stateNode = new StateNode(idle, Condition);
+            return stateNode;
 
             bool Condition()
             {
-                return !_troop.AttackTimer.IsReady && _troop.AnimationListener.IsReadyForNextAnimation;
-            }
-        }
+                if (!_troop.ClosestTarget) return false;
 
-        private IStateNode Idle()
-        {
-            var idle = new Idle(_animationListener);
-            return idle;
+                Vector2 directionToTarget = _troop.ClosestTarget.position - _troop.transform.position;
+                float distanceToTarget = directionToTarget.magnitude;
+
+                return !_troop.AttackTimer.IsReady && distanceToTarget < _troop.Config.AttackRange;
+            }
         }
 
         private StateNode Chase()
@@ -68,11 +69,10 @@ namespace _Project.Scripts.Gameplay._troops
                 if (!_troop.ClosestTarget) return false;
 
 
-                Vector2 directionToTarget =
-                    _troop.ClosestTarget.position - _troop.transform.position;
+                Vector2 directionToTarget = _troop.ClosestTarget.position - _troop.transform.position;
                 float distanceToTarget = directionToTarget.magnitude;
 
-                return _troop.ClosestTarget && distanceToTarget > _troop.Config.AttackRange;
+                return distanceToTarget > _troop.Config.AttackRange;
             }
         }
 
@@ -100,11 +100,12 @@ namespace _Project.Scripts.Gameplay._troops
             {
                 if (!_troop.ClosestTarget) return false;
 
-                Vector2 directionToTarget =
-                    _troop.ClosestTarget.position - _troop.transform.position;
+                Vector2 directionToTarget = _troop.ClosestTarget.position - _troop.transform.position;
                 float distanceToTarget = directionToTarget.magnitude;
-                return _troop.AnimationListener.IsReadyForAttack && _troop.AttackTimer.IsReady &&
-                       _troop.ClosestTarget && distanceToTarget < _troop.Config.AttackRange;
+
+                return
+                    _troop.AttackTimer.IsReady
+                    && distanceToTarget < _troop.Config.AttackRange;
             }
         }
     }

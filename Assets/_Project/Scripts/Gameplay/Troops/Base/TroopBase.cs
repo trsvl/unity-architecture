@@ -1,20 +1,9 @@
-using _Project.Scripts.Utils;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
     public class TroopBase : PoolBase, ITroop, IDamageable
     {
-        public Team Team { get; private set; }
-        public string OpponentTag { get; private set; }
-        public Rigidbody2D Rb { get; private set; }
-
-        public new TroopBaseConfig Config
-        {
-            get => (TroopBaseConfig)base.Config;
-            set => base.Config = value;
-        }
-
         public Transform ClosestTarget
         {
             get
@@ -29,7 +18,16 @@ namespace _Project.Scripts.Gameplay.Troops
             set => closestTarget = value;
         }
 
-        public IAnimationListener AnimationListener { get;  set; }
+        public new TroopBaseConfig Config
+        {
+            get => (TroopBaseConfig)base.Config;
+            set => base.Config = value;
+        }
+
+        public Team Team { get; private set; }
+        public string OpponentTag { get; private set; }
+        public Rigidbody2D Rb { get; private set; }
+        public IAnimationListener AnimationListener { get; set; }
 
         private Transform closestTarget;
         private float health;

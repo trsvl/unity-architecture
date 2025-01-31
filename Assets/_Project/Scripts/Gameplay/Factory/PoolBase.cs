@@ -1,4 +1,3 @@
-using _Project.Scripts.Gameplay.Troops;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay

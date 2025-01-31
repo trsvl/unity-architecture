@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Project.Scripts
+namespace _Project.Scripts.GameSystemLogic
 {
     public class MonoBehaviourStateObserver : MonoBehaviour, IStateObserver, IStartGame
     {
@@ -10,14 +10,12 @@ namespace _Project.Scripts
 
         private void Awake()
         {
-            print(name + " Awake");
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         public void StartGame()
         {
-            this.gameObject.SetActive(true);
-            print(name + " has started");
+            gameObject.SetActive(true);
         }
 
         public void AddListener(object listener)

@@ -28,7 +28,7 @@ namespace _Project.Scripts.Gameplay.Troops
                     PlayAnimation("Run");
                     break;
                 case Attack:
-                    StartCoroutine(PlayAttack("Attack_1", 1f));
+                    StartCoroutine(PlayAttack("Attack_1", 0.7f));
                     break;
             }
         }

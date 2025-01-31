@@ -7,7 +7,7 @@ namespace _Project.Scripts.Gameplay.Troops
     {
         private readonly AttackingTroop _troop;
         private readonly StopWatchTimer _attackTimer;
-        private IAttackAnimationListener _animationListener;
+        private readonly IAttackAnimationListener _animationListener;
 
 
         public Attack(IAttackAnimationListener animationListener, AttackingTroop troop, StopWatchTimer attackTimer) :

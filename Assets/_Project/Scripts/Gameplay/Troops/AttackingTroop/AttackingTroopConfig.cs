@@ -21,7 +21,7 @@ namespace _Project.Scripts.Gameplay.Troops
             var rb = troop.gameObject.GetComponent<Rigidbody2D>();
 
             var animator = troop.gameObject.GetComponent<Animator>();
-            var animationListener = troop.GetComponent<AttackingTroopAnimationListener>();
+            var animationListener = troop.gameObject.GetComponent<AttackingTroopAnimationListener>();
             animationListener.Init(animator);
             troop.AnimationListener = animationListener;
 
@@ -33,6 +33,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
             troop.Create(rb, stateMachine, attackTimer);
             obj.SetActive(false);
+
             return troop;
         }
 

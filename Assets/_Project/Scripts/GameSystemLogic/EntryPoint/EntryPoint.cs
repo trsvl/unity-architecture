@@ -12,8 +12,6 @@ namespace _Project.Scripts.GameSystemLogic
 
         protected virtual void Awake()
         {
-            print("Start EntryPoint");
-
             if (_firstInstaller is IFirstInstaller stateObserverInstaller)
             {
                 stateObserverInstaller.Register(container);
@@ -25,9 +23,9 @@ namespace _Project.Scripts.GameSystemLogic
                 {
                     installerComponent.Register(container);
                 }
-                else if (installer is not IInstaller)
+                else
                 {
-                    Debug.LogError($"{nameof(IInstaller)} is not a {nameof(IInstaller)}");
+                    Debug.LogError($"{nameof(installer)} is not a {nameof(IInstaller)} or null");
                     return;
                 }
             }

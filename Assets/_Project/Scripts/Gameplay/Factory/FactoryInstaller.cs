@@ -1,4 +1,5 @@
 using _Project.Scripts.Gameplay.Troops;
+using _Project.Scripts.GameSystemLogic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace _Project.Scripts.Gameplay
             _factory = obj.GetComponent<Factory>();
             _factory?.Init(troopSpawnPosition);
             CreatePlayerKnight();
+            CreatePlayerKnight();
+            CreateEnemyKnight();
             CreateEnemyKnight();
         }
 

@@ -1,5 +1,5 @@
+using _Project.Scripts.Utils;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace _Project.Scripts.GameSystemLogic
 {

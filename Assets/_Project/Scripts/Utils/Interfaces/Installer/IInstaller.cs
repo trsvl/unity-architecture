@@ -1,4 +1,4 @@
-﻿using _Project.Scripts;
+﻿using _Project.Scripts.GameSystemLogic;
 
 public interface IInstaller
 {

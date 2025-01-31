@@ -7,28 +7,13 @@ namespace _Project.Scripts.Gameplay.Troops
     {
         public new AttackingTroopConfig Config
         {
-            get { return (AttackingTroopConfig)base.Config; }
-            set { base.Config = value; }
+            get => (AttackingTroopConfig)base.Config;
+            set => base.Config = value;
         }
 
-        public IDamageable ClosestDamageableTarget
-        {
-            get
-            {
-                if (ClosestTarget && closestDamageableTarget != null)
-                {
-                    return closestDamageableTarget;
-                }
-
-                return null;
-            }
-            set => closestDamageableTarget = value;
-        }
-
+        public IDamageable ClosestDamageableTarget { get; set; }
         public StopWatchTimer AttackTimer { get; private set; }
-        public new IAttackAnimationListener AnimationListener { get;  set; }
-
-        private IDamageable closestDamageableTarget = null;
+        public new IAttackAnimationListener AnimationListener { get; set; }
 
 
         public void Create(Rigidbody2D rb, StateMachine stateMachine,
@@ -37,7 +22,6 @@ namespace _Project.Scripts.Gameplay.Troops
             base.Create(rb, stateMachine);
             AttackTimer = attackTimer;
         }
-
 
         protected override void Update()
         {

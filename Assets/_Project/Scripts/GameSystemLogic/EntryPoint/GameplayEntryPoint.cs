@@ -7,7 +7,6 @@ namespace _Project.Scripts.GameSystemLogic
             base.Awake();
 
             container.GetService<GameplayStateObserver>().StartGame();
-            print(ProjectData.Instance.Currency);
         }
     }
 }

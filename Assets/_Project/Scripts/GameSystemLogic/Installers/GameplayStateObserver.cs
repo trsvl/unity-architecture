@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Project.Scripts
+namespace _Project.Scripts.GameSystemLogic
 {
-    public class GameplayStateObserver : IGameplayStateObserver, IStateObserver
+    public class GameplayStateObserver : IGameplayStateObserver
     {
         public GameState GameState { get; private set; } = GameState.OFF;
 

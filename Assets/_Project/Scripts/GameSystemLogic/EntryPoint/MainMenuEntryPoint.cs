@@ -5,6 +5,8 @@ namespace _Project.Scripts.GameSystemLogic
         protected override void Awake()
         {
             base.Awake();
+
+            //additional logic
         }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.Troops;
-using _Project.Scripts.GameSystemLogic;
+using _Project.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Pool;
 

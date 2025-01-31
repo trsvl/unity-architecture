@@ -41,7 +41,7 @@ namespace _Project.Scripts.Gameplay._troops
 
         private StateNode Idle()
         {
-            var idle = new Idle(_animationListener);
+            var idle = new Idle(_animationListener, _troop);
 
             StateNode stateNode = new StateNode(idle, Condition);
             return stateNode;

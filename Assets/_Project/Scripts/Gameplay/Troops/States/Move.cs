@@ -4,13 +4,9 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class Move : TroopStateNode
     {
-        private readonly TroopBase _troop;
-
-
         public Move(IAnimationListener animationListener, TroopBase troop) : base(
-            animationListener)
+            animationListener, troop)
         {
-            _troop = troop;
         }
 
         public override void FixedUpdate()

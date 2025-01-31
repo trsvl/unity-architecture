@@ -5,13 +5,13 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class Attack : TroopStateNode
     {
-        private readonly AttackingTroop _troop;
+        private new readonly AttackingTroop _troop;
         private readonly StopWatchTimer _attackTimer;
         private readonly IAttackAnimationListener _animationListener;
 
 
         public Attack(IAttackAnimationListener animationListener, AttackingTroop troop, StopWatchTimer attackTimer) :
-            base(animationListener)
+            base(animationListener, troop)
         {
             _troop = troop;
             _attackTimer = attackTimer;

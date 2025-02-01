@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 732386271}
   - component: {fileID: 732386272}
   m_Layer: 0
-  m_Name: Troop Installer
+  m_Name: Factory Installer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -425,6 +425,7 @@ MonoBehaviour:
   _playerSpawnArea: {fileID: 1826122897}
   _enemySpawnArea: {fileID: 9516678}
   attackingTroopConfig: {fileID: 11400000, guid: e6c6e02511922494b95783caa67254ff, type: 2}
+  deathAnimationConfig: {fileID: 11400000, guid: 22778c3eab80b624d8c6ea3582470fc9, type: 2}
 --- !u!4 &800766803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1430930738003841159, guid: a118129be67eb8d45bfc3ca527ba5371, type: 3}
@@ -462,6 +463,7 @@ Transform:
   m_Children:
   - {fileID: 618946771}
   - {fileID: 732386271}
+  - {fileID: 1535741696}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &956201600
@@ -479,6 +481,7 @@ MonoBehaviour:
   _firstInstaller: {fileID: 618946772}
   _installers:
   - {fileID: 732386272}
+  - {fileID: 1535741697}
 --- !u!1 &967747745
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +751,50 @@ Transform:
   - {fileID: 1669562871}
   m_Father: {fileID: 1070011630}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1535741695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535741696}
+  - component: {fileID: 1535741697}
+  m_Layer: 0
+  m_Name: TroopEffectsInstaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1535741696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535741695}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 956201599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1535741697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535741695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eef9efd2c0e4a48af2346af271f3f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1669562870
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,10 +16,10 @@ namespace _Project.Scripts.Gameplay.Troops
         public new IAttackAnimationListener AnimationListener { get; set; }
 
 
-        public void Create(Rigidbody2D rb, StateMachine stateMachine,
+        public void Create(Rigidbody2D rb, SpriteRenderer spriteRenderer, StateMachine stateMachine,
             StopWatchTimer attackTimer)
         {
-            base.Create(rb, stateMachine);
+            base.Create(rb, spriteRenderer, stateMachine);
             AttackTimer = attackTimer;
         }
 

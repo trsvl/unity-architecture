@@ -21,7 +21,7 @@ namespace _Project.Scripts.GameSystemLogic
                 }
             }
 
-            _ = SceneLoader.Instance.LoadScene(SceneLoader.Scene.MainMenu);
+            _ = SceneLoader.Instance.LoadScene(SceneName.MainMenu);
         }
     }
 }

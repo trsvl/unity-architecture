@@ -19,7 +19,8 @@ namespace _Project.Scripts.Gameplay.Troops
             var troop = obj.GetComponent<AttackingTroop>();
             troop.Config = this;
             var rb = troop.gameObject.GetComponent<Rigidbody2D>();
-
+            var spriteRenderer = troop.gameObject.GetComponent<SpriteRenderer>();
+            
             var animator = troop.gameObject.GetComponent<Animator>();
             var animationListener = troop.gameObject.GetComponent<AttackingTroopAnimationListener>();
             animationListener.Init(animator);
@@ -31,7 +32,7 @@ namespace _Project.Scripts.Gameplay.Troops
             var attackTimer = new StopWatchTimer(AttackCooldown);
             var stateMachine = new AttackingTroopStateMachine(troop, animationListener, attackTimer).GetStateMachine();
 
-            troop.Create(rb, stateMachine, attackTimer);
+            troop.Create(rb,spriteRenderer, stateMachine, attackTimer);
             obj.SetActive(false);
 
             return troop;

@@ -1,6 +1,5 @@
 using _Project.Scripts.Gameplay.Troops;
 using _Project.Scripts.GameSystemLogic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay
@@ -10,6 +9,7 @@ namespace _Project.Scripts.Gameplay
         [SerializeField] private Collider2D _playerSpawnArea;
         [SerializeField] private Collider2D _enemySpawnArea;
         [SerializeField] private AttackingTroopConfig attackingTroopConfig;
+        [SerializeField] private DeathAnimationConfig deathAnimationConfig;
 
         private Factory _factory;
 
@@ -17,9 +17,9 @@ namespace _Project.Scripts.Gameplay
         public void Register(Container container)
         {
             var troopSpawnPosition = new TroopSpawnPosition(_playerSpawnArea, _enemySpawnArea);
-            var obj = Instantiate(Resources.Load("Gameplay/Factory"));
-            _factory = obj.GetComponent<Factory>();
-            _factory?.Init(troopSpawnPosition);
+            _factory = Instantiate(Resources.Load<Factory>("Gameplay/Factory")).GetComponent<Factory>();
+            _factory.Init(troopSpawnPosition, deathAnimationConfig);
+
             CreatePlayerKnight();
             CreatePlayerKnight();
             CreateEnemyKnight();

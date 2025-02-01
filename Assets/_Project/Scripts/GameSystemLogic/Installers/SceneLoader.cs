@@ -5,15 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace _Project.Scripts.GameSystemLogic
 {
-    public class SceneLoader : Singleton<SceneLoader>
+    public partial class SceneLoader : Singleton<SceneLoader>
     {
         [SerializeField] private GameObject loadingScreen;
-
-        public enum Scene
-        {
-            MainMenu,
-            Gameplay
-        }
 
 
         protected override void Awake()
@@ -23,7 +17,7 @@ namespace _Project.Scripts.GameSystemLogic
             DontDestroyOnLoad(this);
         }
 
-        public async Task LoadScene(Scene scene)
+        public async Task LoadScene(SceneName scene)
         {
             loadingScreen.SetActive(true);
 

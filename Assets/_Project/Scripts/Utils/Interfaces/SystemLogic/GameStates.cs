@@ -1,12 +1,4 @@
-﻿public enum GameState
-{
-    OFF,
-    PLAY,
-    PAUSE,
-    FINISH
-}
-
-public interface IStartGame
+﻿public interface IStartGame
 {
     public void StartGame();
 }

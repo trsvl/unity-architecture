@@ -2,8 +2,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    [CreateAssetMenu(fileName = "TroopBase", menuName = "SO/Troops/Base", order = 0)]
-    public class TroopBaseConfig : BaseConfig
+    public abstract class TroopBaseConfig : BaseConfig
     {
         [field: SerializeField] public float MaxHealth { get; private set; }
         [field: SerializeField] public float MoveSpeed { get; private set; }

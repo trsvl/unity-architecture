@@ -27,6 +27,7 @@ namespace _Project.Scripts.Gameplay.Troops
         public Team Team { get; private set; }
         public string OpponentTag { get; private set; }
         public Rigidbody2D Rb { get; private set; }
+        public SpriteRenderer SpriteRenderer { get; private set; }
         public IAnimationListener AnimationListener { get; set; }
 
         private Transform closestTarget;
@@ -34,9 +35,10 @@ namespace _Project.Scripts.Gameplay.Troops
         private StateMachine _stateMachine;
 
 
-        protected void Create(Rigidbody2D rb, StateMachine stateMachine)
+        protected void Create(Rigidbody2D rb, SpriteRenderer spriteRenderer, StateMachine stateMachine)
         {
             Rb = rb;
+            SpriteRenderer = spriteRenderer;
             _stateMachine = stateMachine;
         }
 
@@ -62,11 +64,14 @@ namespace _Project.Scripts.Gameplay.Troops
 
         public void TakeDamage(float damage)
         {
-            health -= damage;
-
-            if (health <= 0)
+            if (health > 0)
             {
-                Factory.Instance.ReturnToPool(this);
+                TroopEffects.Instance.TakeDamage(this);
+                health -= damage;
+            }
+            else
+            {
+                TroopEffects.Instance.Death(this);
             }
         }
 

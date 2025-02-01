@@ -8,13 +8,14 @@ namespace _Project.Scripts.Gameplay
 {
     public class Factory : Singleton<Factory>
     {
-        private TroopSpawnPosition _troopSpawnPosition;
         private readonly Dictionary<PoolType, IObjectPool<PoolBase>> _pools = new();
+        private TroopSpawnPosition _troopSpawnPosition;
+        private DeathAnimationConfig _deathAnimationConfig;
 
-
-        public void Init(TroopSpawnPosition troopSpawnPosition)
+        public void Init(TroopSpawnPosition troopSpawnPosition, DeathAnimationConfig deathAnimationConfig)
         {
             _troopSpawnPosition = troopSpawnPosition;
+            _deathAnimationConfig = deathAnimationConfig;
         }
 
         public void Spawn(BaseConfig config)
@@ -31,6 +32,13 @@ namespace _Project.Scripts.Gameplay
                 Vector2 troopPosition = _troopSpawnPosition.SetPosition(team);
                 troop.transform.position = troopPosition;
             }
+        }
+
+        public void SpawnDeathAnimation(TroopBase troop)
+        {
+            PoolBase deathAnimation = GetPool(_deathAnimationConfig).Get();
+            deathAnimation.gameObject.transform.localScale = troop.transform.localScale;
+            deathAnimation.transform.position = troop.transform.position;
         }
 
         public void ReturnToPool(PoolBase obj)

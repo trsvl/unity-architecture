@@ -2,8 +2,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay
 {
-    [CreateAssetMenu(fileName = "BaseConfig", menuName = "SO/Troops", order = 0)]
-    public class BaseConfig : ScriptableObject
+    public abstract class BaseConfig : ScriptableObject
     {
         [field: SerializeField] public GameObject Prefab { get; private set; }
         [field: SerializeField] public PoolType PoolType { get; private set; }
@@ -12,9 +11,9 @@ namespace _Project.Scripts.Gameplay
         public virtual PoolBase OnCreate()
         {
             var obj = Instantiate(Prefab);
-            obj.SetActive(false);
             var poolBase = obj.GetComponent<PoolBase>();
             poolBase.Config = this;
+            obj.SetActive(false);
             return poolBase;
         }
 

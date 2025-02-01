@@ -26,13 +26,13 @@ namespace _Project.Scripts.GameSystemLogic
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 print("gameplay");
-                _ = SceneLoader.Instance.LoadScene(SceneLoader.Scene.Gameplay);
+                _ = SceneLoader.Instance.LoadScene(SceneName.Gameplay);
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 print("mainmenu");
-                _ = SceneLoader.Instance.LoadScene(SceneLoader.Scene.MainMenu);
+                _ = SceneLoader.Instance.LoadScene(SceneName.MainMenu);
             }
         }
     }

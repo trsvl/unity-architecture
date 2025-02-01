@@ -66,12 +66,12 @@ namespace _Project.Scripts.Gameplay.Troops
         {
             if (health > 0)
             {
-                TroopEffects.Instance.TakeDamage(this);
+                TroopEvents.Instance.TakeDamage(this);
                 health -= damage;
             }
             else
             {
-                TroopEffects.Instance.Death(this);
+                TroopEvents.Instance.Death(this);
             }
         }
 

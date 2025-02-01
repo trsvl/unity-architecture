@@ -3,8 +3,9 @@ using _Project.Scripts.Utils;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
-    public class TroopEffects : Singleton<TroopEffects>
+    public class TroopEvents : Singleton<TroopEvents>
     {
+        public bool IsNull => OnTakeDamage == null && OnDeath == null;
         public event Action<TroopBase> OnTakeDamage;
         public event Action<TroopBase> OnDeath;
 

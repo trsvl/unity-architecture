@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2890744005701175624}
   - component: {fileID: 40334587070940646}
   m_Layer: 5
-  m_Name: Image
+  m_Name: TroopCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,8 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardCover: {fileID: 5862740343349722342}
-  _troopRadialFilled: {fileID: 1637534906932359857}
-  _cooldown: 2
+  _troopIcon: {fileID: 5560517638756396427}
+  _troopIconRadialFilled: {fileID: 1637534906932359857}
 --- !u!1 &4650128223807403057
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6890575268940947723, guid: 3f89edd92cd5b86449dc78554e58fd26, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6890575268940947723, guid: 3f89edd92cd5b86449dc78554e58fd26, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

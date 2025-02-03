@@ -6,6 +6,7 @@ namespace _Project.Scripts.Gameplay.Troops
     {
         [field: SerializeField] public float MaxHealth { get; private set; }
         [field: SerializeField] public float MoveSpeed { get; private set; }
+        [field: SerializeField] public float SpawnCooldown { get; private set; }
 
 
         protected void AssignDefaultVariables(TroopBase troop, StateMachine stateMachine)

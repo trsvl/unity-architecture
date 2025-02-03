@@ -6,15 +6,18 @@ namespace _Project.Scripts.Gameplay.Buildings
 {
     public class Castle : MonoBehaviour, IDamageable
     {
+        public Collider2D Collider { get; private set; }
+
         private float _health;
         private Team _team;
         private CastleEvents _castleEvents;
         private GameplayStateObserver _gameplayStateObserver;
 
 
-        public void Init(float health, Team team, CastleEvents castleEvents,
+        public void Init(Collider2D objCollider, float health, Team team, CastleEvents castleEvents,
             GameplayStateObserver gameplayStateObserver)
         {
+            Collider = objCollider;
             _health = health;
             _team = team;
             _castleEvents = castleEvents;

@@ -21,8 +21,6 @@ namespace _Project.Scripts.Gameplay
             _factory.Init(troopSpawnPosition, deathAnimationConfig);
 
             CreatePlayerKnight();
-            CreatePlayerKnight();
-            CreateEnemyKnight();
             CreateEnemyKnight();
         }
 

@@ -5,19 +5,19 @@ public class TroopStateNode : IStateNode
     public bool IsEnter { get; set; }
 
     protected readonly TroopBase _troop;
-    private readonly IAnimationListener _animationListener;
+    private readonly IAnimationListener _animationController;
 
 
-    protected TroopStateNode(IAnimationListener animationListener, TroopBase troop)
+    protected TroopStateNode(IAnimationListener animationController, TroopBase troop)
     {
-        _animationListener = animationListener;
+        _animationController = animationController;
         _troop = troop;
     }
 
     public virtual void OnEnter()
     {
         IsEnter = true;
-        _animationListener.Notify(this);
+        _animationController.Notify(this);
         _troop.CheckRotation();
     }
 

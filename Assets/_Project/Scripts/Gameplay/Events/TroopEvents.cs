@@ -5,7 +5,6 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class TroopEvents : Singleton<TroopEvents>
     {
-        public bool IsNull => OnTakeDamage == null && OnDeath == null;
         public event Action<TroopBase> OnTakeDamage;
         public event Action<TroopBase> OnDeath;
 

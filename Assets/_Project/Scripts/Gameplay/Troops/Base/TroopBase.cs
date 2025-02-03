@@ -27,17 +27,22 @@ namespace _Project.Scripts.Gameplay.Troops
         public Team Team { get; private set; }
         public string OpponentTag { get; private set; }
         public Rigidbody2D Rb { get; private set; }
+        public Collider2D Collider { get; private set; }
         public SpriteRenderer SpriteRenderer { get; private set; }
-        public IAnimationListener AnimationListener { get; set; }
+        public IAnimationListener AnimationListener { get; protected set; }
 
         private Transform closestTarget;
         private float health;
         private StateMachine _stateMachine;
 
 
-        protected void Create(Rigidbody2D rb, SpriteRenderer spriteRenderer, StateMachine stateMachine)
+     
+
+        public void AssignDefaultVariables(Rigidbody2D rb, Collider2D troopCollider, SpriteRenderer spriteRenderer,
+            StateMachine stateMachine)
         {
             Rb = rb;
+            Collider = troopCollider;
             SpriteRenderer = spriteRenderer;
             _stateMachine = stateMachine;
         }

@@ -12,16 +12,9 @@ namespace _Project.Scripts.Gameplay.Troops
         }
 
         public IDamageable ClosestDamageableTarget { get; set; }
-        public StopWatchTimer AttackTimer { get; private set; }
+        public StopWatchTimer AttackTimer { get;  set; }
         public new IAttackAnimationListener AnimationListener { get; set; }
 
-
-        public void Create(Rigidbody2D rb, SpriteRenderer spriteRenderer, StateMachine stateMachine,
-            StopWatchTimer attackTimer)
-        {
-            base.Create(rb, spriteRenderer, stateMachine);
-            AttackTimer = attackTimer;
-        }
 
         protected override void Update()
         {

@@ -15,16 +15,10 @@ namespace _Project.Scripts.Gameplay.Troops
         public override PoolBase OnCreate()
         {
             var obj = Instantiate(Prefab);
-
             var troop = obj.GetComponent<AttackingTroop>();
-            troop.Config = this;
-            var rb = troop.gameObject.GetComponent<Rigidbody2D>();
-            var spriteRenderer = troop.gameObject.GetComponent<SpriteRenderer>();
-            
-            var animator = troop.gameObject.GetComponent<Animator>();
-            var animationListener = troop.gameObject.GetComponent<AttackingTroopAnimationListener>();
-            animationListener.Init(animator);
-            troop.AnimationListener = animationListener;
+
+            var animator = troop.GetComponent<Animator>();
+            var animationListener = new AttackingTroopAnimationListener(animator);
 
             var detectionTargets = troop.GetComponentInChildren<DetectionTargets>();
             detectionTargets.Init(troop);
@@ -32,9 +26,13 @@ namespace _Project.Scripts.Gameplay.Troops
             var attackTimer = new StopWatchTimer(AttackCooldown);
             var stateMachine = new AttackingTroopStateMachine(troop, animationListener, attackTimer).GetStateMachine();
 
-            troop.Create(rb,spriteRenderer, stateMachine, attackTimer);
-            obj.SetActive(false);
+            troop.Config = this;
+            troop.AttackTimer = attackTimer;
+            troop.AnimationListener = animationListener;
 
+            AssignDefaultVariables(troop, stateMachine);
+            
+            obj.SetActive(false);
             return troop;
         }
 

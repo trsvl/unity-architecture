@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace _Project.Scripts.Gameplay._troops
 {
-    public class AttackingTroopStateMachine
+    public class AttackingTroopStateMachine : ITroopStateMachine
     {
         private readonly AttackingTroop _troop;
         private readonly AttackingTroopAnimationListener _animationListener;
         private readonly StopWatchTimer _attackTimer;
+        private StateMachine _stateMachine;
+        private IStateNode startingNode;
 
 
         public AttackingTroopStateMachine(AttackingTroop troop, AttackingTroopAnimationListener animationListener,
@@ -21,22 +23,28 @@ namespace _Project.Scripts.Gameplay._troops
 
         public StateMachine GetStateMachine()
         {
-            var stateMachine = new StateMachine();
+            _stateMachine = new StateMachine();
 
             var idle = Idle();
             var movement = Movement();
             var chase = Chase();
             var attack = Attack();
 
+            _stateMachine.AddTransitionFixedUpdate(idle);
+            _stateMachine.AddTransition(movement);
+            _stateMachine.AddTransitionFixedUpdate(chase);
+            _stateMachine.AddTransitionFixedUpdate(attack);
 
-            stateMachine.AddTransition(idle);
-            stateMachine.AddTransition(movement);
-            stateMachine.AddTransition(chase);
-            stateMachine.AddTransition(attack);
+            _stateMachine.CurrentStateNode = idle.Node;
+            startingNode = idle.Node;
 
-            stateMachine.CurrentStateNode = idle.Node;
+            return _stateMachine;
+        }
 
-            return stateMachine;
+        public void OnDeath()
+        {
+            _stateMachine.CurrentStateNode.OnExit();
+            _stateMachine.CurrentStateNode = startingNode;
         }
 
         private StateNode Idle()
@@ -50,7 +58,8 @@ namespace _Project.Scripts.Gameplay._troops
             {
                 if (!_troop.ClosestTarget) return false;
 
-                Vector2 directionToTarget = _troop.ClosestTarget.position - _troop.transform.position;
+                Vector2 directionToTarget =
+                    _troop.ClosestDamageableTarget.Collider.ClosestPoint(_troop.Rb.position) - _troop.Rb.position;
                 float distanceToTarget = directionToTarget.magnitude;
 
                 return !_troop.AttackTimer.IsReady && distanceToTarget < _troop.Config.AttackRange;
@@ -68,8 +77,8 @@ namespace _Project.Scripts.Gameplay._troops
             {
                 if (!_troop.ClosestTarget) return false;
 
-
-                Vector2 directionToTarget = _troop.ClosestTarget.position - _troop.transform.position;
+                Vector2 directionToTarget =
+                    _troop.ClosestDamageableTarget.Collider.ClosestPoint(_troop.Rb.position) - _troop.Rb.position;
                 float distanceToTarget = directionToTarget.magnitude;
 
                 return distanceToTarget > _troop.Config.AttackRange;
@@ -100,12 +109,11 @@ namespace _Project.Scripts.Gameplay._troops
             {
                 if (!_troop.ClosestTarget) return false;
 
-                Vector2 directionToTarget = _troop.ClosestTarget.position - _troop.transform.position;
+                Vector2 directionToTarget =
+                    _troop.ClosestDamageableTarget.Collider.ClosestPoint(_troop.Rb.position) - _troop.Rb.position;
                 float distanceToTarget = directionToTarget.magnitude;
 
-                return
-                    _troop.AttackTimer.IsReady
-                    && distanceToTarget < _troop.Config.AttackRange;
+                return _troop.AttackTimer.IsReady && distanceToTarget < _troop.Config.AttackRange;
             }
         }
     }

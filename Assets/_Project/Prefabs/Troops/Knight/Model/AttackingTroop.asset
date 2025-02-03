@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Prefab>k__BackingField: {fileID: 6387683836843021711, guid: ebae9953218128a468bb674ac7ff1b00, type: 3}
   <PoolType>k__BackingField: 0
-  <MaxHealth>k__BackingField: 2
+  <MaxHealth>k__BackingField: 55555
   <MoveSpeed>k__BackingField: 2
   <AttackDamage>k__BackingField: 1
   <AttackRange>k__BackingField: 0.4

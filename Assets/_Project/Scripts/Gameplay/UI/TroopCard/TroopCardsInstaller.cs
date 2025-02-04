@@ -3,7 +3,7 @@ using _Project.Scripts.GameSystemLogic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Project.Scripts.Gameplay.UI.Troop_Card
+namespace _Project.Scripts.Gameplay.UI.TroopCard
 {
     public class TroopCardsInstaller : MonoBehaviour, IInstaller
     {

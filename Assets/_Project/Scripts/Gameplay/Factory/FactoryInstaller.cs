@@ -11,29 +11,12 @@ namespace _Project.Scripts.Gameplay
         [SerializeField] private AttackingTroopConfig attackingTroopConfig;
         [SerializeField] private DeathAnimationConfig deathAnimationConfig;
 
-        private Factory _factory;
-
 
         public void Register(Container container)
         {
             var troopSpawnPosition = new TroopSpawnPosition(_playerSpawnArea, _enemySpawnArea);
-            _factory = Instantiate(Resources.Load<Factory>("Gameplay/Factory")).GetComponent<Factory>();
-            _factory.Init(troopSpawnPosition, deathAnimationConfig);
-
-            CreatePlayerKnight();
-            CreateEnemyKnight();
-        }
-
-        [ContextMenu("Create Player knight")]
-        public void CreatePlayerKnight()
-        {
-            _factory.Spawn(attackingTroopConfig, Team.Player);
-        }
-
-        [ContextMenu("Create Enemy knight")]
-        public void CreateEnemyKnight()
-        {
-            _factory.Spawn(attackingTroopConfig, Team.Enemy);
+            var factory = Instantiate(Resources.Load<Factory>("Gameplay/Factory")).GetComponent<Factory>();
+            factory.Init(troopSpawnPosition, deathAnimationConfig);
         }
     }
 }

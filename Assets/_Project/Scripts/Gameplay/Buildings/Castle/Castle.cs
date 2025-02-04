@@ -34,8 +34,14 @@ namespace _Project.Scripts.Gameplay.Buildings
             }
             else
             {
-                Debug.LogWarning(_team == Team.Player ? "Defeat!" : "Win!");
-                _gameplayStateObserver.FinishGame();
+                if (_team == Team.Player)
+                {
+                    _gameplayStateObserver.FinishGame();
+                }
+                else
+                {
+                    _gameplayStateObserver.LoseGame();
+                }
             }
         }
     }

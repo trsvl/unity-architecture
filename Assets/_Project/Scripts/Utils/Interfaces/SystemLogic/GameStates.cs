@@ -17,3 +17,8 @@ public interface IFinishGame
 {
     public void FinishGame();
 }
+
+public interface ILoseGame
+{
+    public void LoseGame();
+}

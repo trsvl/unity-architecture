@@ -63,7 +63,10 @@ namespace _Project.Scripts.GameSystemLogic
 
             foreach (var listener in listeners)
             {
-                action(listener as T);
+                if (listener is T concreteListener)
+                {
+                    action(concreteListener);
+                }
             }
         }
     }

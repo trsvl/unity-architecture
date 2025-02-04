@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 
 namespace _Project.Scripts.GameSystemLogic
 {
@@ -7,12 +7,12 @@ namespace _Project.Scripts.GameSystemLogic
     {
         public GameState GameState { get; private set; } = GameState.OFF;
 
-        private readonly List<object> listeners = new List<object>();
+        private readonly List<object> listeners = new();
 
 
         public void AddListener(object listener)
         {
-            if (listener is IStartGame or IPauseGame or IResumeGame or IFinishGame)
+            if (listener is IStartGame or IPauseGame or IResumeGame or IFinishGame or ILoseGame)
             {
                 listeners.Add(listener);
             }
@@ -20,7 +20,7 @@ namespace _Project.Scripts.GameSystemLogic
 
         public void RemoveListener(object listener)
         {
-            if (listener is IStartGame or IPauseGame or IResumeGame or IFinishGame)
+            if (listener is IStartGame or IPauseGame or IResumeGame or IFinishGame or ILoseGame)
             {
                 listeners.Remove(listener);
             }
@@ -28,77 +28,42 @@ namespace _Project.Scripts.GameSystemLogic
 
         public void StartGame()
         {
-            if (GameState != GameState.OFF)
-            {
-                Debug.LogWarning("Game state is " + GameState);
-                return;
-            }
-
-            GameState = GameState.PLAY;
-
-            foreach (var listener in listeners)
-            {
-                if (listener is IStartGame concreteListener)
-                {
-                    concreteListener.StartGame();
-                }
-            }
+            NotifyListeners<IStartGame>(GameState == GameState.OFF, GameState.PLAY, (listener) => listener.StartGame());
         }
 
         public void PauseGame()
         {
-            if (GameState != GameState.PLAY)
-            {
-                Debug.LogWarning("Game state is " + GameState);
-                return;
-            }
-
-            GameState = GameState.PAUSE;
-
-            foreach (var listener in listeners)
-            {
-                if (listener is IPauseGame concreteListener)
-                {
-                    concreteListener.PauseGame();
-                }
-            }
+            NotifyListeners<IPauseGame>(GameState == GameState.PLAY, GameState.PAUSE,
+                (listener) => listener.PauseGame());
         }
 
         public void ResumeGame()
         {
-            if (GameState != GameState.PAUSE)
-            {
-                Debug.LogWarning("Game state is " + GameState);
-                return;
-            }
-
-            GameState = GameState.PLAY;
-
-            foreach (var listener in listeners)
-            {
-                if (listener is IResumeGame concreteListener)
-                {
-                    concreteListener.ResumeGame();
-                }
-            }
+            NotifyListeners<IResumeGame>(GameState == GameState.PAUSE, GameState.PLAY,
+                (listener) => listener.ResumeGame());
         }
 
         public void FinishGame()
         {
-            if (GameState != GameState.PLAY)
-            {
-                Debug.LogWarning("Game state is " + GameState);
-                return;
-            }
+            NotifyListeners<IFinishGame>(GameState == GameState.PLAY, GameState.FINISH,
+                (listener) => listener.FinishGame());
+        }
 
-            GameState = GameState.FINISH;
+        public void LoseGame()
+        {
+            NotifyListeners<ILoseGame>(GameState == GameState.PLAY, GameState.LOSE,
+                (listener) => listener.LoseGame());
+        }
+
+        private void NotifyListeners<T>(bool condition, GameState newState, Action<T> action) where T : class
+        {
+            if (!condition) return;
+
+            GameState = newState;
 
             foreach (var listener in listeners)
             {
-                if (listener is IFinishGame concreteListener)
-                {
-                    concreteListener.FinishGame();
-                }
+                action(listener as T);
             }
         }
     }

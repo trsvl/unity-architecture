@@ -3,5 +3,6 @@ public enum GameState
     OFF,
     PLAY,
     PAUSE,
-    FINISH
+    FINISH,
+    LOSE
 }

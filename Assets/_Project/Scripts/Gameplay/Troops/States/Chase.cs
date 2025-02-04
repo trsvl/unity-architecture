@@ -16,7 +16,7 @@ namespace _Project.Scripts.Gameplay.Troops
         public override void OnEnter()
         {
             base.OnEnter();
-            _troopVelocityRandomValue = new Vector2(Random.Range(-1.0f, .5f), Random.Range(-1.0f, 0.5f));
+            _troopVelocityRandomValue = new Vector2(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f));
         }
 
         public override void FixedUpdate()

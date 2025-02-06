@@ -21,8 +21,8 @@ namespace _Project.Scripts.Utils.Installers
             loadingScreen.SetActive(true);
 
             var sceneName = scene.ToString();
-            print("loading scene: " + sceneName);
-            await Task.Delay(2 * 1000);
+            
+           // await Task.Delay(2 * 1000);
 
             AsyncOperation loadingScene = SceneManager.LoadSceneAsync(sceneName);
 

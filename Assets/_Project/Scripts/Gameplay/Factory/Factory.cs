@@ -52,8 +52,6 @@ namespace _Project.Scripts.Gameplay
 
             if (_pools.TryGetValue(config.PoolType, out pool)) return pool;
 
-            Debug.Log("team " + team);
-
             pool = new ObjectPool<PoolBase>(
                 config.OnCreate,
                 obj => obj.gameObject.SetActive(true),

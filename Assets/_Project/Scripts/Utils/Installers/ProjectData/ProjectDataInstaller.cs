@@ -6,7 +6,7 @@ namespace _Project.Scripts.Utils.Installers
     {
         public void Load()
         {
-            var projectData = Instantiate(Resources.Load("Bootstrap/ProjectData"));
+            Instantiate(Resources.Load("Bootstrap/ProjectData"));
         }
     }
 }

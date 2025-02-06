@@ -1,3 +1,4 @@
+using System;
 using _Project.Scripts.GameSystemLogic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,23 +7,41 @@ namespace _Project.Scripts.MainMenu.Footer
 {
     public class FooterInstaller : MonoBehaviour, IInstaller
     {
-        [SerializeField] private GameObject[] footerButtons;
+        [SerializeField] private GameObject[] _footerButtons;
 
 
         public void Register(Container container)
         {
             var footerController = new FooterController();
+            var stateObserver = container.GetService<IMainMenuStateObserver>();
 
-            for (int i = 0; i < footerButtons.Length; i++)
+            MainMenuState[] states =
             {
-                var image = footerButtons[i].GetComponent<Image>();
+                MainMenuState.ShopScreen,
+                MainMenuState.BattleScreen,
+                MainMenuState.CardsScreen
+            };
+
+            Action[] actions =
+            {
+                stateObserver.ShopScreen,
+                stateObserver.BattleScreen,
+                stateObserver.CardsScreen
+            };
+
+            for (int i = 0; i < _footerButtons.Length; i++)
+            {
+                int index = i;
+
+                var image = _footerButtons[i].GetComponent<Image>();
                 var imageRect = image.GetComponent<RectTransform>();
-                var footerButton = new FooterButton(image, imageRect);
+                var button = _footerButtons[i].GetComponent<Button>();
 
-                if (i == 2) footerController.OnClick(footerButton);
+                var footerButton = new FooterButton(image, imageRect, states[i]);
 
-                var button = footerButtons[i].GetComponent<Button>();
-                button.onClick.AddListener(() => footerController.OnClick(footerButton));
+                footerController.SetActiveButton(footerButton, stateObserver.MainMenuState);
+
+                button.onClick.AddListener(() => footerController.OnClick(footerButton, actions[index]));
             }
         }
     }

@@ -4,7 +4,7 @@ namespace _Project.Scripts.GameSystemLogic
 {
     public class EntryPoint : MonoBehaviour
     {
-        protected Container container = new();
+        protected readonly Container container = new();
 
         [SerializeField] private MonoBehaviour _firstInstaller;
         [SerializeField] private MonoBehaviour[] _installers;

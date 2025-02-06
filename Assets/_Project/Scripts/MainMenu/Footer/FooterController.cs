@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -9,30 +10,38 @@ namespace _Project.Scripts.MainMenu.Footer
         private FooterButton _activeButton;
 
 
-        public void OnClick(FooterButton button)
+        public void OnClick(FooterButton button, Action action = null)
         {
             if (!_isActive) return;
             if (_activeButton != null && _activeButton == button) return;
 
             _isActive = false;
-            
-            if (_activeButton != null) Reset();
-            _activeButton = button;
 
+            Color defaultColor = new Color32(147, 147, 147, 255);
             Color activeColor = new Color(1, 1, 1, 1);
-            button.Image.color = activeColor;
-            button.RectTransform
-                .DOSizeDelta(new Vector2(button.RectTransform.sizeDelta.x, button.RectTransform.sizeDelta.y + 80f),
-                    0.2f).SetEase(Ease.OutQuad).OnComplete(() => { _isActive = true; });
+
+            if (_activeButton != null) DoAnimation(false, defaultColor);
+
+            _activeButton = button;
+            action?.Invoke();
+
+            DoAnimation(true, activeColor);
         }
 
-        private void Reset()
+        public void SetActiveButton(FooterButton button, MainMenuState state)
         {
-            Color defaultColor = new Color32(147, 147, 147, 255);
-            _activeButton.Image.color = defaultColor;
+            if (state != button.State) return;
+
+            OnClick(button);
+        }
+
+        private void DoAnimation(bool isActive, Color newColor)
+        {
+            _activeButton.Image.color = newColor;
             _activeButton.RectTransform.DOSizeDelta(
-                new Vector2(_activeButton.RectTransform.sizeDelta.x, _activeButton.RectTransform.sizeDelta.y - 80f),
-                0.2f).SetEase(Ease.OutQuad);
+                new Vector2(_activeButton.RectTransform.sizeDelta.x,
+                    _activeButton.RectTransform.sizeDelta.y + (isActive ? 80f : -80f)),
+                0.2f).SetEase(Ease.OutQuad).OnComplete(() => { _isActive = true; });
         }
     }
 }

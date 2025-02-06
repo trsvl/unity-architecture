@@ -1,4 +1,5 @@
 using _Project.Scripts.GameSystemLogic;
+using _Project.Scripts.Utils.Installers;
 using _Project.Scripts.Utils.UI.Buttons;
 using UnityEngine;
 using UnityEngine.Events;

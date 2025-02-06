@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
-using _Project.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _Project.Scripts.GameSystemLogic
+namespace _Project.Scripts.Utils.Installers
 {
     public partial class SceneLoader : Singleton<SceneLoader>
     {

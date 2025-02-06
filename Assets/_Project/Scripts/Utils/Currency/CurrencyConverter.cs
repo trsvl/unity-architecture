@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace _Project.Scripts.Utils.Currency
 {
@@ -19,7 +20,7 @@ namespace _Project.Scripts.Utils.Currency
 
         public string Do(ulong currency)
         {
-            if (ulong.MaxValue <= currency) return "max";
+            if (currency >= ulong.MaxValue) return "max";
 
             var roundedExponent = (int)Math.Floor(Math.Log10(currency)) + 1;
 

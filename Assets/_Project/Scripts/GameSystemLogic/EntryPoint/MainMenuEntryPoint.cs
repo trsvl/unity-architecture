@@ -6,7 +6,7 @@ namespace _Project.Scripts.GameSystemLogic
         {
             base.Awake();
 
-            //additional logic
+            container.GetService<IMainMenuStateObserver>().BattleScreen();
         }
     }
 }

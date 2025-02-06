@@ -6,15 +6,14 @@ namespace _Project.Scripts.Utils.Installers
 {
     public class TroopsDataController
     {
-        private TroopBase[] AllTroops { get; set; } // create new SO AllTroops
-
+        public TroopBase[] AllTroops { get; private set; } // create new SO AllTroops
         public TroopBase[] TroopsArmy { get; private set; } = new TroopBase[3];
 
 
         public void LoadData()
         {
             var troopsArmy = PlayerPrefs.GetString("TroopsArmy", "0");
-            TroopsArmy = ParseTroopArmyData(troopsArmy);
+            //TroopsArmy = ParseTroopArmyData(troopsArmy);
         }
 
         private TroopBase[] ParseTroopArmyData(string data)

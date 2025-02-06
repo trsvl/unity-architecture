@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Project.Scripts.GameSystemLogic
+namespace _Project.Scripts.Utils.Installers
 {
     public class SceneLoaderInstaller : MonoBehaviour, IBootstrapInstaller
     {

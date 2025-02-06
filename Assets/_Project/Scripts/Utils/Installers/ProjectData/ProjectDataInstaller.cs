@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Project.Scripts.GameSystemLogic.Installers
+namespace _Project.Scripts.Utils.Installers
 {
     public class ProjectDataInstaller : MonoBehaviour, IBootstrapInstaller
     {

@@ -29,7 +29,7 @@ namespace _Project.Scripts.Utils.Installers
         [ContextMenu("Add Currency")]
         public void AddCurrency()
         {
-            CurrencyDataController.AddGoldCurrency(50);
+            CurrencyDataController.AddGoldCurrency(500);
         }
 
         [ContextMenu("Remove Currency")]

@@ -3,7 +3,7 @@ using _Project.Scripts.Utils.UI.Buttons;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Project.Scripts.Gameplay.UI.PopUps
+namespace _Project.Scripts.Gameplay.UI.Popup
 {
     public class GamePopupInstaller : MonoBehaviour, IInstaller
     {
@@ -21,7 +21,7 @@ namespace _Project.Scripts.Gameplay.UI.PopUps
             
             _settingsButton.onClick.AddListener(gameplayStateObserver.PauseGame);
         }
-
+  
         private void OnDestroy()
         {
             _settingsButton.onClick.RemoveAllListeners();

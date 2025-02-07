@@ -14,7 +14,7 @@ namespace _Project.Scripts.Utils.UI.Buttons
             if (!_text) _text = GetComponentInChildren<TextMeshProUGUI>(true);
 
             onClick.AddListener(listener);
-            _text.text = text;
+            _text.SetText(text);
         }
 
         public void RemoveListeners()

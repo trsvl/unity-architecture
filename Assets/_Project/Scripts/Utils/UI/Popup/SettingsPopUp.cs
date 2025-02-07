@@ -1,20 +1,21 @@
-using _Project.Scripts.GameSystemLogic;
 using _Project.Scripts.Utils.Installers;
 using _Project.Scripts.Utils.UI.Buttons;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
-namespace _Project.Scripts.Gameplay.UI.PopUps
+namespace _Project.Scripts.Utils.UI.Popup //!!!
 {
-    public class GamePopup : IPauseGame, IResumeGame, IFinishGame, ILoseGame
+    public class SettingsPopUp
     {
         private readonly GameObject _popUp;
+        private readonly Button _closeButton;
         private readonly TextButton _firstButton;
         private readonly TextButton _secondButton;
         private readonly IGameplayStateObserver _gameplayStateObserver;
 
 
-        public GamePopup(GameObject popUp, TextButton firstButton, TextButton secondButton,
+        public SettingsPopUp(GameObject popUp, TextButton firstButton, TextButton secondButton,
             IGameplayStateObserver gameplayStateObserver)
         {
             _popUp = popUp;

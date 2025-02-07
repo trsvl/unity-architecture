@@ -7,9 +7,6 @@ namespace _Project.Scripts.Utils.Installers
 {
     public class CurrencyDataController
     {
-        private TextMeshProUGUI _goldCurrencyText = null;
-        private TextMeshProUGUI _diamondCurrencyText = null;
-
         public ulong GoldCurrency
         {
             get => _goldCurrency;
@@ -35,6 +32,8 @@ namespace _Project.Scripts.Utils.Installers
         private const string DIAMOND_CURRENCY = "DiamondCurrency";
         private ulong _goldCurrency;
         private ulong _diamondCurrency;
+        private TextMeshProUGUI _goldCurrencyText;
+        private TextMeshProUGUI _diamondCurrencyText;
 
 
         public void LoadData()

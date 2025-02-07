@@ -22,7 +22,7 @@ namespace _Project.Scripts.Utils.Currency
         {
             if (currency >= ulong.MaxValue) return "max";
 
-            var roundedExponent = (int)Math.Floor(Math.Log10(currency)) + 1;
+            var roundedExponent = (int)Math.Floor(Math.Log10(currency));
 
             int exponent = roundedExponent % 3 == 0 ? roundedExponent : roundedExponent - roundedExponent % 3;
 

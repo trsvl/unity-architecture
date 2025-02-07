@@ -18,9 +18,11 @@ namespace _Project.Scripts.Utils.Installers
             _canvas.worldCamera = Camera.main;
 
             var currencyController = ProjectData.Instance.CurrencyDataController;
+            var levelController = ProjectData.Instance.LevelDataController;
 
             currencyController.BindGoldCurrencyText(_goldCurrencyText);
             currencyController.BindDiamondCurrencyText(_diamondCurrencyText);
+            levelController.BindCurrentLevelText(_currentScreenText);
 
             if (SceneManager.GetActiveScene().name == SceneName.Gameplay.ToString()) OnBattleScreen();
         }

@@ -8,7 +8,6 @@ namespace _Project.Scripts.Gameplay
     {
         [SerializeField] private Collider2D _playerSpawnArea;
         [SerializeField] private Collider2D _enemySpawnArea;
-        [SerializeField] private AttackingTroopConfig attackingTroopConfig;
         [SerializeField] private DeathAnimationConfig deathAnimationConfig;
 
 

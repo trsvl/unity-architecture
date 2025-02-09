@@ -1,15 +1,16 @@
 using System.Collections.Generic;
+using _Project.Scripts.Gameplay.Troops.Base;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
     public class DetectionTargets : MonoBehaviour
     {
-        private AttackingTroop _troop;
+        private TroopBase _troop;
         private readonly List<Transform> targets = new();
 
 
-        public void Init(AttackingTroop troop)
+        public void Init(TroopBase troop)
         {
             _troop = troop;
         }

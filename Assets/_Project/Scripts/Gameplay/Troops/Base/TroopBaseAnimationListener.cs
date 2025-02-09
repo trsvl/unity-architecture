@@ -1,16 +1,16 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Project.Scripts.Gameplay.Troops
+namespace _Project.Scripts.Gameplay.Troops.Base
 {
-    public class AttackingTroopAnimationListener : IAttackAnimationListener
+    public class TroopBaseAnimationListener : IAttackAnimationListener
     {
         private readonly Animator _animator;
 
         public bool IsReadyForAttack { get; private set; } = true;
 
 
-        public AttackingTroopAnimationListener(Animator animator)
+        public TroopBaseAnimationListener(Animator animator)
         {
             _animator = animator;
         }

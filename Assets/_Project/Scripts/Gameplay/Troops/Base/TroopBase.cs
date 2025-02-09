@@ -1,8 +1,9 @@
+using _Project.Scripts.Utils;
 using UnityEngine;
 
-namespace _Project.Scripts.Gameplay.Troops
+namespace _Project.Scripts.Gameplay.Troops.Base
 {
-    public class TroopBase : PoolBase, ITroop, IDamageable
+    public class TroopBase : PoolBase, ITroop, IDamageable, IAttack
     {
         public Transform ClosestTarget
         {
@@ -29,14 +30,15 @@ namespace _Project.Scripts.Gameplay.Troops
         public Rigidbody2D Rb { get; private set; }
         public Collider2D Collider { get; private set; }
         public SpriteRenderer SpriteRenderer { get; private set; }
-        public IAnimationListener AnimationListener { get; protected set; }
+        public int Level { get; set; }
+        public StopWatchTimer AttackTimer { get; set; }
+        public IDamageable ClosestDamageableTarget { get; set; }
+        public IAnimationListener AnimationListener { get; set; }
 
         private Transform closestTarget;
         private float health;
         private StateMachine _stateMachine;
 
-
-     
 
         public void AssignDefaultVariables(Rigidbody2D rb, Collider2D troopCollider, SpriteRenderer spriteRenderer,
             StateMachine stateMachine)
@@ -47,9 +49,10 @@ namespace _Project.Scripts.Gameplay.Troops
             _stateMachine = stateMachine;
         }
 
-        public void Spawn(Team team)
+        public void Spawn(Team team, int level)
         {
             Team = team;
+            Level = level;
             gameObject.tag = team.ToString();
             OpponentTag = (Team == Team.Player ? Team.Enemy : Team.Player).ToString();
             closestTarget = null;
@@ -59,6 +62,7 @@ namespace _Project.Scripts.Gameplay.Troops
 
         protected virtual void Update()
         {
+            AttackTimer.Update(Time.deltaTime);
             _stateMachine.Update();
         }
 
@@ -94,6 +98,12 @@ namespace _Project.Scripts.Gameplay.Troops
             {
                 gameObject.transform.rotation = Quaternion.Euler(0f, Team == Team.Player ? 0f : 180f, 0f);
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, Config.AttackRange);
         }
     }
 }

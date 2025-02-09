@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.Troops;
+using _Project.Scripts.Gameplay.Troops.Base;
 using _Project.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -23,12 +24,12 @@ namespace _Project.Scripts.Gameplay
             GetPool(config).Get();
         }
 
-        public void Spawn(BaseConfig config, Team team)
+        public void Spawn(BaseConfig config, Team team, int level)
         {
             PoolBase obj = GetPool(config).Get();
             if (obj is TroopBase troop)
             {
-                troop.Spawn(team);
+                troop.Spawn(team, level);
                 Vector2 troopPosition = _troopSpawnPosition.SetPosition(team);
                 troop.transform.position = troopPosition;
             }

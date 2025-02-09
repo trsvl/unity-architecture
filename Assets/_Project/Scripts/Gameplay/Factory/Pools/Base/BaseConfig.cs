@@ -1,3 +1,5 @@
+using _Project.Scripts.Gameplay.Troops;
+using _Project.Scripts.Gameplay.Troops.Base;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay
@@ -22,7 +24,7 @@ namespace _Project.Scripts.Gameplay
             obj.gameObject.SetActive(true);
         }
 
-        public virtual void OnSpawn(PoolBase obj, Team team)
+        public virtual void OnSpawn(TroopBase obj, Team team, int level)
         {
             obj.gameObject.SetActive(true);
         }

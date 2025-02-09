@@ -1,14 +1,15 @@
+using _Project.Scripts.Gameplay.Troops.Base;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops
 {
     public class Chase : TroopStateNode
     {
-        private new readonly AttackingTroop _troop;
+        private new readonly TroopBase _troop;
         private Vector2 _troopVelocityRandomValue;
 
 
-        public Chase(IAnimationListener animationListener, AttackingTroop troop) : base(animationListener, troop)
+        public Chase(IAnimationListener animationListener, TroopBase troop) : base(animationListener, troop)
         {
             _troop = troop;
         }

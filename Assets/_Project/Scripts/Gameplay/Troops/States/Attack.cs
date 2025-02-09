@@ -1,3 +1,4 @@
+using _Project.Scripts.Gameplay.Troops.Base;
 using _Project.Scripts.Utils;
 using UnityEngine;
 
@@ -5,12 +6,12 @@ namespace _Project.Scripts.Gameplay.Troops
 {
     public class Attack : TroopStateNode
     {
-        private new readonly AttackingTroop _troop;
+        private new readonly TroopBase _troop;
         private readonly StopWatchTimer _attackTimer;
         private readonly IAttackAnimationListener _animationListener;
 
 
-        public Attack(IAttackAnimationListener animationListener, AttackingTroop troop, StopWatchTimer attackTimer) :
+        public Attack(IAttackAnimationListener animationListener, TroopBase troop, StopWatchTimer attackTimer) :
             base(animationListener, troop)
         {
             _troop = troop;
@@ -30,7 +31,7 @@ namespace _Project.Scripts.Gameplay.Troops
         {
             Debug.Log("Hit");
             _attackTimer.Reset();
-            _troop.ClosestDamageableTarget.TakeDamage(_troop.Config.AttackDamage);
+            _troop.ClosestDamageableTarget.TakeDamage(_troop.Config.Damage);
         }
     }
 }

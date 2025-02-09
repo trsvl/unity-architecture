@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Gameplay.Troops.Base;
 using _Project.Scripts.Utils;
 
 namespace _Project.Scripts.Gameplay.Troops

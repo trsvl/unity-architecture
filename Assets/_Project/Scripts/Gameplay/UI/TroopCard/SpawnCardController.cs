@@ -1,18 +1,19 @@
 using _Project.Scripts.Gameplay.Troops;
+using _Project.Scripts.Gameplay.Troops.Base;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace _Project.Scripts.Gameplay.UI.TroopCard
 {
-    public class CardButtonController : MonoBehaviour
+    public class SpawnCardController : MonoBehaviour
     {
         [SerializeField] private Image _cardCover;
         [SerializeField] private Image _troopIcon;
         [SerializeField] private Image _troopIconRadialFilled;
 
         private TroopBaseConfig _troop;
-         private Team _team;
+        private Team _team;
         private Vector3 _originalScale;
         private Button _cardButton;
 
@@ -32,7 +33,7 @@ namespace _Project.Scripts.Gameplay.UI.TroopCard
 
         private void OnPress()
         {
-            Factory.Instance.Spawn(_troop, _team);
+            Factory.Instance.Spawn(_troop, _team, level);
 
             _cardButton.interactable = false;
             _cardCover.color = new Color32(161, 161, 161, 255);

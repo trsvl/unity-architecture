@@ -1,3 +1,4 @@
+using _Project.Scripts.Gameplay.Troops.Base;
 using UnityEngine;
 
 namespace _Project.Scripts.Gameplay.Troops

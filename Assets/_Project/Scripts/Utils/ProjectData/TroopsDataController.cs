@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.Gameplay.Troops.Base;
@@ -29,13 +30,14 @@ namespace _Project.Scripts.Utils.Installers
             var playerTroopsDTO = JsonUtility.FromJson<PlayerTroopDTO[]>(json);
             TroopBaseData[] playerTroops = new TroopBaseData[playerTroopsDTO.Length];
 
-            for (int i = 0; i < playerTroopsDTO.Length; i++)
+            for (int i = 0; i < playerTroops.Length; i++)
             {
                 TroopBaseData troopBaseData = new()
                 {
                     Level = playerTroopsDTO[i].level,
                     IsSelected = playerTroopsDTO[i].isSelected,
-                    TroopConfig = SO.AllTroops.GetValueOrDefault(playerTroopsDTO[i].Type)
+                    TroopConfigIndex = Array.FindIndex(SO.AllTroopConfigs,
+                        config => config.PoolType == playerTroopsDTO[i].Type),
                 };
 
                 playerTroops[i] = troopBaseData;

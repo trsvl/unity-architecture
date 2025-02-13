@@ -15,24 +15,38 @@ namespace _Project.Scripts.MainMenu.Screens
             base.Load();
 
             var troopsDataController = ProjectData.Instance.TroopsDataController;
-            TroopBaseData[] availableTroops = troopsDataController.LoadPlayerTroops();
+            TroopBaseData[] playerTroops = troopsDataController.LoadPlayerTroops();
             var allConfigs = troopsDataController.SO.AllTroopConfigs;
 
-            foreach (TroopBaseData t in availableTroops)
+            var availableTroops = new List<TroopBaseData>();
+            var unavailableTroops = new List<TroopBaseConfig>();
+
+            for (int i = 0; i < allConfigs.Length; i++)
             {
-                if (allConfigs.Contains(t.TroopConfig))
+                if (playerTroops[i] != null && (allConfigs[playerTroops[i].TroopConfigIndex] == allConfigs[i]))
                 {
-                    var troopCard = Instantiate(TroopCardPrefab);
-                    ulong price = t.TroopConfig.Price + (ulong)(t.TroopConfig.PriceScale * (t.Level - 1));
-                    var sprite = t.TroopConfig.Prefab.GetComponent<SpriteRenderer>().sprite;
-                    troopCard.Init(t.Level, price, sprite, true);
+                    availableTroops.Add(playerTroops[i]);
                 }
                 else
                 {
-                    var troopCard = Instantiate(TroopCardPrefab);
-                    var sprite = t.TroopConfig.Prefab.GetComponent<SpriteRenderer>().sprite;
-                    troopCard.Init(0, 0, sprite, false);
+                    unavailableTroops.Add(allConfigs[i]);
                 }
+            }
+
+            foreach (TroopBaseData data in availableTroops)
+            {
+                var config = allConfigs[data.TroopConfigIndex];
+                var troopCard = Instantiate(TroopCardPrefab);
+                ulong price = config.Price + (ulong)(config.PriceScale * (data.Level - 1));
+                var sprite = config.Prefab.GetComponent<SpriteRenderer>().sprite;
+                troopCard.Init(data.Level, price, sprite, true);
+            }
+
+            foreach (TroopBaseConfig config in unavailableTroops)
+            {
+                var troopCard = Instantiate(TroopCardPrefab);
+                var sprite = config.Prefab.GetComponent<SpriteRenderer>().sprite;
+                troopCard.Init(0, 0, sprite, false);
             }
         }
 

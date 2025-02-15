@@ -17,7 +17,8 @@ namespace _Project.Scripts.Gameplay.UI.TroopCard
         public void Register(Container container)
         {
             var playerTroops = ProjectData.Instance.TroopsDataController.LoadSelectedPlayerTroops();
-            
+            Factory.Instance.Spawn(_troop, _team, level);
+
             foreach (var data in playerTroops)
             {
                 var troopCard = Instantiate(prefab, cardsCanvasParent);

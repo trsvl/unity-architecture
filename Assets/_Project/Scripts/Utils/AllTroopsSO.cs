@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using _Project.Scripts.Gameplay.Troops.Base;
 using UnityEngine;
 

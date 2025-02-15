@@ -20,27 +20,29 @@ namespace _Project.Scripts.Utils.Installers
         public void LoadData()
         {
             SO = Resources.Load<AllTroopsSO>("SO/AllTroops");
-            SaveJSON();
+            SaveJSON(); //!!!
         }
 
-        public TroopBaseData[] LoadPlayerTroops()
+        public TroopData[] LoadPlayerTroops()
         {
             string json = PlayerPrefs.GetString("PlayerTroops");
             Debug.Log(json);
             var playerTroopsDTO = JsonUtility.FromJson<PlayerTroopDTO[]>(json);
-            TroopBaseData[] playerTroops = new TroopBaseData[playerTroopsDTO.Length];
+            TroopData[] playerTroops = new TroopData[playerTroopsDTO.Length];
 
             for (int i = 0; i < playerTroops.Length; i++)
             {
-                TroopBaseData troopBaseData = new()
+                var troopConfigIndex = Array.FindIndex(SO.AllTroopConfigs,
+                    config => config.PoolType == playerTroopsDTO[i].Type);
+
+                TroopData troopData = new()
                 {
                     Level = playerTroopsDTO[i].level,
                     IsSelected = playerTroopsDTO[i].isSelected,
-                    TroopConfigIndex = Array.FindIndex(SO.AllTroopConfigs,
-                        config => config.PoolType == playerTroopsDTO[i].Type),
+                    Config = SO.AllTroopConfigs[troopConfigIndex],
                 };
 
-                playerTroops[i] = troopBaseData;
+                playerTroops[i] = troopData;
             }
 
             return playerTroops;

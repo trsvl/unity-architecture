@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using _Project.Scripts.Gameplay.Troops.Base;
+using _Project.Scripts.MainMenu.Screens.Cards;
 using _Project.Scripts.Utils.Installers;
 using UnityEngine;
 
@@ -9,44 +11,68 @@ namespace _Project.Scripts.MainMenu.Screens
     {
         public TroopCard TroopCardPrefab;
 
+        private CardSorting _cardSorting;
+        private List<TroopData> _allTroops;
+
 
         public override void Load()
         {
             base.Load();
 
             var troopsDataController = ProjectData.Instance.TroopsDataController;
-            TroopBaseData[] playerTroops = troopsDataController.LoadPlayerTroops();
+
+            _cardSorting = new CardSorting();
+
+            TroopData[] playerTroops = troopsDataController.LoadPlayerTroops();
+
             var allConfigs = troopsDataController.SO.AllTroopConfigs;
 
-            var availableTroops = new List<TroopBaseData>();
-            var unavailableTroops = new List<TroopBaseConfig>();
+            _allTroops = new List<TroopData>(allConfigs.Length);
 
             for (int i = 0; i < allConfigs.Length; i++)
             {
-                if (playerTroops[i] != null && (allConfigs[playerTroops[i].TroopConfigIndex] == allConfigs[i]))
+                if (playerTroops[i] != null && (playerTroops[i].Config == allConfigs[i]))
                 {
-                    availableTroops.Add(playerTroops[i]);
+                    var troopData = playerTroops[i];
+                    _allTroops.Add(troopData);
                 }
                 else
                 {
-                    unavailableTroops.Add(allConfigs[i]);
+                    var troopData = new TroopData()
+                    {
+                        Level = 0,
+                        IsSelected = false,
+                        Config = allConfigs[i],
+                    };
+                    _allTroops.Add(troopData);
                 }
             }
 
-            foreach (TroopBaseData data in availableTroops)
+            SortByLevel();
+        }
+
+        private void SpawnTroopCard(TroopData troopData, CurrencyDataController currencyDataController)
+        {
+            var troopCard = Instantiate(TroopCardPrefab);
+            var config = troopData.Config;
+            ulong price = config.Price + (ulong)(config.PriceScale * (troopData.Level - 1));
+            var sprite = config.Prefab.GetComponent<SpriteRenderer>().sprite;
+
+            troopCard.Init(troopData.Level, price, sprite, currencyDataController, troopData, troopData.Level > 0);
+        }
+
+        private void SortByLevel()
+        {
+            _cardSorting.SortByLevel(_allTroops);
+
+            foreach (Transform child in transform)
             {
-                var config = allConfigs[data.TroopConfigIndex];
-                var troopCard = Instantiate(TroopCardPrefab);
-                ulong price = config.Price + (ulong)(config.PriceScale * (data.Level - 1));
-                var sprite = config.Prefab.GetComponent<SpriteRenderer>().sprite;
-                troopCard.Init(data.Level, price, sprite, true);
+                Destroy(child.gameObject);
             }
 
-            foreach (TroopBaseConfig config in unavailableTroops)
+            foreach (var troopData in _allTroops)
             {
-                var troopCard = Instantiate(TroopCardPrefab);
-                var sprite = config.Prefab.GetComponent<SpriteRenderer>().sprite;
-                troopCard.Init(0, 0, sprite, false);
+                SpawnTroopCard(troopData, ProjectData.Instance.CurrencyDataController);
             }
         }
 

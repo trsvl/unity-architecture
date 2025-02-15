@@ -33,7 +33,6 @@ namespace _Project.Scripts.Gameplay.UI.TroopCard
 
         private void OnPress()
         {
-            Factory.Instance.Spawn(_troop, _team, level);
 
             _cardButton.interactable = false;
             _cardCover.color = new Color32(161, 161, 161, 255);

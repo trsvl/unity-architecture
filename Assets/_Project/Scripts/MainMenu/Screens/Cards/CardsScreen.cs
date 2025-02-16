@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using _Project.Scripts.Gameplay.Troops.Base;
 using _Project.Scripts.MainMenu.Screens.Cards;
 using _Project.Scripts.Utils.Installers;
@@ -12,41 +10,17 @@ namespace _Project.Scripts.MainMenu.Screens
         public TroopCard TroopCardPrefab;
 
         private CardSorting _cardSorting;
-        private List<TroopData> _allTroops;
+        private TroopData[] _allTroops;
 
 
         public override void Load()
         {
             base.Load();
 
-            var troopsDataController = ProjectData.Instance.TroopsDataController;
-
             _cardSorting = new CardSorting();
 
-            TroopData[] playerTroops = troopsDataController.LoadPlayerTroops();
-
-            var allConfigs = troopsDataController.SO.AllTroopConfigs;
-
-            _allTroops = new List<TroopData>(allConfigs.Length);
-
-            for (int i = 0; i < allConfigs.Length; i++)
-            {
-                if (playerTroops[i] != null && (playerTroops[i].Config == allConfigs[i]))
-                {
-                    var troopData = playerTroops[i];
-                    _allTroops.Add(troopData);
-                }
-                else
-                {
-                    var troopData = new TroopData()
-                    {
-                        Level = 0,
-                        IsSelected = false,
-                        Config = allConfigs[i],
-                    };
-                    _allTroops.Add(troopData);
-                }
-            }
+            var troopsDataController = new TroopsDataController();
+            _allTroops = troopsDataController.LoadAllTroops();
 
             SortByLevel();
         }
@@ -58,7 +32,8 @@ namespace _Project.Scripts.MainMenu.Screens
             ulong price = config.Price + (ulong)(config.PriceScale * (troopData.Level - 1));
             var sprite = config.Prefab.GetComponent<SpriteRenderer>().sprite;
 
-            troopCard.Init(troopData.Level, price, sprite, currencyDataController, troopData, troopData.Level > 0);
+            troopCard.Init(troopData.Level, price, sprite, currencyDataController, troopData, troopData.IsSelected,
+                troopData.Level > 0);
         }
 
         private void SortByLevel()

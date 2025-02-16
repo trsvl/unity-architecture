@@ -1,8 +1,6 @@
+using _Project.Scripts.Gameplay.Troops.Base;
 using _Project.Scripts.GameSystemLogic;
-using _Project.Scripts.MainMenu.Screens;
-using _Project.Scripts.Utils.DTOs;
 using _Project.Scripts.Utils.Installers;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,19 +14,32 @@ namespace _Project.Scripts.Gameplay.UI.TroopCard
 
         public void Register(Container container)
         {
-            var playerTroops = ProjectData.Instance.TroopsDataController.LoadSelectedPlayerTroops();
-            Factory.Instance.Spawn(_troop, _team, level);
+            var troopsDataController = new TroopsDataController();
+            troopsDataController.LoadAllTroops();
 
-            foreach (var data in playerTroops)
+            foreach (TroopData data in troopsDataController.TroopArmy)
             {
+                TroopBaseConfig config = data.Config;
+
                 var troopCard = Instantiate(prefab, cardsCanvasParent);
                 var button = troopCard.GetComponent<Button>();
-                var sprite = data.Troop  .Prefab.GetComponent<SpriteRenderer>().sprite;
-                troopCard.Init(data.Troop.Prefab, Team.Player, button, sprite);
+                var sprite = config.Prefab.GetComponent<SpriteRenderer>().sprite;
+                var cooldown = config.SpawnCooldown;
+                troopCard.Init(button, sprite, cooldown);
+
                 var troopCard1 = Instantiate(prefab, cardsCanvasParent);
                 var button1 = troopCard1.GetComponent<Button>();
-                troopCard1.Init(data.Troop.Prefab, Team.Enemy, button1, sprite);
+                troopCard1.Init(button, sprite, cooldown);
+
+                int level = data.Level;
+                button.onClick.AddListener(() => SpawnTroop(config, Team.Player, level));
+                button1.onClick.AddListener(() => SpawnTroop(config, Team.Enemy, level));
             }
+        }
+
+        private void SpawnTroop(TroopBaseConfig config, Team team, int level)
+        {
+            Factory.Instance.Spawn(config, team, level);
         }
     }
 }

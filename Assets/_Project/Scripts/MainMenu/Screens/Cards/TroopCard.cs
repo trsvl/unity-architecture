@@ -9,6 +9,7 @@ namespace _Project.Scripts.MainMenu.Screens
     public class TroopCard : MonoBehaviour
     {
         public TroopData TroopData { get; private set; }
+        public bool IsSelected { get; private set; }
 
         [SerializeField] private TextMeshProUGUI _levelText;
         [SerializeField] private TextMeshProUGUI _priceText;
@@ -19,15 +20,22 @@ namespace _Project.Scripts.MainMenu.Screens
         private CurrencyDataController _currencyDataController;
 
         public void Init(int level, ulong price, Sprite sprite, CurrencyDataController currencyDataController,
-            TroopData troopData, bool isEnabled)
+            TroopData troopData, bool isSelected, bool isEnabled)
         {
             TroopData = troopData;
+            IsSelected = isSelected;
+            
             _levelText.SetText(level.ToString());
             _currencyDataController.SetCurrency(_priceText, price);
             _troopImage.sprite = sprite;
 
-            if (isEnabled) return;
+            if (isSelected)
+            {
+                //
+            }
 
+            if (isEnabled) return;
+            
             _troopButton.interactable = false;
             _upgradeButton.interactable = false;
         }

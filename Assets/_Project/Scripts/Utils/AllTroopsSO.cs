@@ -6,6 +6,6 @@ namespace _Project.Scripts.Utils
     [CreateAssetMenu(fileName = "AllTroopsSO", menuName = "SO/TroopList/AllTroopsSO", order = 0)]
     public class AllTroopsSO : ScriptableObject
     {
-        public TroopBaseConfig[] AllTroopConfigs;
+        public TroopBaseConfig[] configs;
     }
 }

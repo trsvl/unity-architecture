@@ -5,7 +5,6 @@ namespace _Project.Scripts.Utils.Installers
     public class ProjectData : Singleton<ProjectData>
     {
         public CurrencyDataController CurrencyDataController { get; private set; } = new();
-        public TroopsDataController TroopsDataController { get; private set; } = new();
         public LevelDataController LevelDataController { get; private set; } = new();
 
 
@@ -22,7 +21,6 @@ namespace _Project.Scripts.Utils.Installers
             PlayerPrefs.DeleteAll();
             
             CurrencyDataController.LoadData();
-            TroopsDataController.LoadData();
             LevelDataController.LoadData();
         }
 

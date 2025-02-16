@@ -12,19 +12,16 @@ namespace _Project.Scripts.Gameplay.UI.TroopCard
         [SerializeField] private Image _troopIcon;
         [SerializeField] private Image _troopIconRadialFilled;
 
-        private TroopBaseConfig _troop;
-        private Team _team;
         private Vector3 _originalScale;
         private Button _cardButton;
+        private float _cooldown;
 
 
-        public void Init(TroopBaseConfig troop, Team team, Button cardButton, Sprite troopIcon)
+        public void Init(Button cardButton, Sprite troopIcon, float cooldown)
         {
-            _troop = troop;
-            _team = team;
             _cardButton = cardButton;
+            _cooldown = cooldown;
             _troopIcon.sprite = troopIcon;
-
             _originalScale = transform.localScale;
             _troopIconRadialFilled.color = new Color32(0, 0, 0, 208);
             _troopIconRadialFilled.sprite = troopIcon;
@@ -33,11 +30,10 @@ namespace _Project.Scripts.Gameplay.UI.TroopCard
 
         private void OnPress()
         {
-
             _cardButton.interactable = false;
             _cardCover.color = new Color32(161, 161, 161, 255);
             _troopIconRadialFilled.fillAmount = 1;
-            _troopIconRadialFilled.DOFillAmount(0f, _troop.SpawnCooldown).SetEase(Ease.Linear).OnComplete(() =>
+            _troopIconRadialFilled.DOFillAmount(0f, _cooldown).SetEase(Ease.Linear).OnComplete(() =>
             {
                 _cardButton.interactable = true;
                 _cardCover.color = new Color32(255, 255, 255, 255);

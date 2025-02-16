@@ -35,7 +35,7 @@ namespace _Project.Scripts.Utils.Installers
 
         public void OnCardsScreen()
         {
-            var troopController = ProjectData.Instance.TroopsDataController;
+            var troopController = new TroopsDataController();
             _currentScreenText.SetText($"Cards");
         }
 

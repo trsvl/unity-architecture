@@ -1,18 +1,18 @@
-using System.Collections.Generic;
+using System;
 using _Project.Scripts.Gameplay.Troops.Base;
 
 namespace _Project.Scripts.MainMenu.Screens.Cards
 {
     public class CardSorting
     {
-        public void SortByName(List<TroopData> cards)
+        public void SortByName(TroopData[] cards)
         {
-            cards.Sort((a, b) => a.Config.PoolType.CompareTo(b.Config.PoolType));
+            Array.Sort(cards, (a, b) => a.Config.PoolType.CompareTo(b.Config.PoolType));
         }
 
-        public void SortByLevel(List<TroopData> cards)
+        public void SortByLevel(TroopData[] cards)
         {
-            cards.Sort((a, b) => a.Level.CompareTo(b.Level));
+            Array.Sort(cards, (a, b) => a.Level.CompareTo(b.Level));
         }
     }
 }

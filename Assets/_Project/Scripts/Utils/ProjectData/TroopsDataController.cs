@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using _Project.Scripts.Gameplay.Troops.Base;
 using _Project.Scripts.Utils.DTOs;
 using UnityEngine;
@@ -9,43 +8,68 @@ namespace _Project.Scripts.Utils.Installers
 {
     public class TroopsDataController
     {
-        public AllTroopsSO SO { get; private set; }
+        public List<TroopData> TroopArmy { get; private set; }
+
+        private AllTroopsSO allTroopsSO;
+        private readonly HashSet<PoolType> currentArmy = new() { PoolType.Knight }; //!!!
 
         private readonly PlayerTroopDTO[] testData =
         {
-            new() { level = 1, isSelected = true, Type = PoolType.Knight },
-        };
+            new() { level = 1, Type = PoolType.Knight },
+        }; //!!!
 
 
         public void LoadData()
         {
-            SO = Resources.Load<AllTroopsSO>("SO/AllTroops");
+            allTroopsSO = Resources.Load<AllTroopsSO>("SO/AllTroops");
             SaveJSON(); //!!!
         }
 
-        public TroopData[] LoadPlayerTroops()
+        public TroopData[] LoadAllTroops()
         {
             string json = PlayerPrefs.GetString("PlayerTroops");
-            Debug.Log(json);
             var playerTroopsDTO = JsonUtility.FromJson<PlayerTroopDTO[]>(json);
-            TroopData[] playerTroops = new TroopData[playerTroopsDTO.Length];
+            Debug.Log(json);
 
-            for (int i = 0; i < playerTroops.Length; i++)
+            var allConfigs = allTroopsSO.configs;
+            TroopData[] allTroops = new TroopData[allConfigs.Length];
+            TroopArmy = new List<TroopData>();
+
+            for (int i = 0; i < allConfigs.Length; i++)
             {
-                var troopConfigIndex = Array.FindIndex(SO.AllTroopConfigs,
-                    config => config.PoolType == playerTroopsDTO[i].Type);
+                var troopIndex = Array.FindIndex(allConfigs,
+                    config => config.PoolType == playerTroopsDTO[i]?.Type);
 
-                TroopData troopData = new()
+                if (troopIndex != -1)
                 {
-                    Level = playerTroopsDTO[i].level,
-                    IsSelected = playerTroopsDTO[i].isSelected,
-                    Config = SO.AllTroopConfigs[troopConfigIndex],
-                };
+                    var config = allConfigs[troopIndex];
+                    var isSelected = currentArmy.Contains(config.PoolType);
 
-                playerTroops[i] = troopData;
+                    TroopData troopData = new()
+                    {
+                        Level = playerTroopsDTO[i].level,
+                        IsSelected = isSelected,
+                        Config = config
+                    };
+
+                    if (isSelected) TroopArmy.Add(troopData);
+
+                    allTroops[i] = troopData;
+                }
+                else
+                {
+                    var troopData = new TroopData()
+                    {
+                        Level = 0,
+                        IsSelected = false,
+                        Config = allConfigs[i],
+                    };
+
+                    allTroops[i] = troopData;
+                }
             }
 
-            return playerTroops;
+            return allTroops;
         }
 
         private void SaveJSON()
